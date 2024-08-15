@@ -1,0 +1,16 @@
+{
+    "name": "phasmamate-server",
+    "version": "1.0.0",
+    "description": "Local server for PhasmaMate",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "@fastify/static": "^6.0.0",
+        "@fastify/view": "^9.1.0",
+        "ejs": "^3.1.10",
+        "express": "^4.17.1",
+        "fastify": "^4.28.1"
+    }
+}
