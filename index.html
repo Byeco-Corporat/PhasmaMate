@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhasmaMate</title>
+    <link rel="stylesheet" type="text/css" href="Css/style.css">
+</head>
+<body>
+    <div id="navbar">
+        <span>PhasmaMate</span>
+        <span>Windows Controls</span>
+    </div>
+
+    <div id="card">
+        <div id="left-section">
+            <h2>Welcome PhasmaMate</h2>
+        </div>
+        <div id="right-section">
+            <p>Update Status: <span id="update-status">Checking...</span></p>
+        </div>
+    </div>
+
+    <div id="toast">PhasmaMate successfully opened!</div>
+
+    <button id="start-overlay">Overlay Başlat</button>
+
+    <script>
+        // Açılışta toast mesajını göster
+        window.onload = function() {
+            showToast();
+            checkForUpdates();
+        };
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.className = "show";
+            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 5000);
+        }
+
+        function checkForUpdates() {
+            // Update durumu kontrol edilir (buraya backend kontrolü eklenebilir)
+            const updateStatus = document.getElementById("update-status");
+            updateStatus.textContent = "No updates available";
+        }
+
+        // Butona tıklanma olayını dinleyin ve Python scriptini başlatın
+        document.getElementById('start-overlay').addEventListener('click', () => {
+            window.api.startPythonOverlay().then(() => {
+                console.log('Python script successfully executed.');
+            }).catch((err) => {
+                console.error('Failed to execute Python script:', err);
+            });
+        });
+    </script>
+</body>
+</html>
