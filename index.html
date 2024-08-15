@@ -8,50 +8,61 @@
 </head>
 <body>
     <div id="navbar">
-        <span>PhasmaMate</span>
-        <span>Windows Controls</span>
-    </div>
-
-    <div id="card">
-        <div id="left-section">
-            <h2>Welcome PhasmaMate</h2>
-        </div>
-        <div id="right-section">
-            <p>Update Status: <span id="update-status">Checking...</span></p>
+        <span id="navbar-title">PhasmaMate</span>
+        <div id="navbar-buttons">
+            <button class="navbar-button" onclick="minimizeWindow()">_</button>
+            <button class="navbar-button" onclick="maximizeWindow()">Maximize</button>
+            <button class="navbar-button" onclick="closeWindow()">X</button>
         </div>
     </div>
 
-    <div id="toast">PhasmaMate successfully opened!</div>
+    <div class="main-content">
+        <div id="intro-card">
+            <div id="intro-section">
+                <h2>Welcome PhasmaMate</h2>
+            </div>
+        </div>
 
-    <button id="start-overlay">Overlay Başlat</button>
+        <div class="plugins">
+            <div class="card">
+                <div class="card-title">Overlay Kontrol</div>
+                <div class="card-content">
+                    <span>Aç/Kapat</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="overlay-toggle1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Overlay Kontrol</div>
+                <div class="card-content">
+                    <span>Aç/Kapat</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="overlay-toggle2">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-title">Overlay Kontrol</div>
+                <div class="card-content">
+                    <span>Aç/Kapat</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="overlay-toggle3">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        // Açılışta toast mesajını göster
-        window.onload = function() {
-            showToast();
-            checkForUpdates();
-        };
+    <div id="toast">
+        <img src="Asset/check.png" alt="Icon" class="toast-icon">
+        <span class="toast-text">PhasmaMate successfully opened!</span>
+    </div>
+    
 
-        function showToast() {
-            const toast = document.getElementById("toast");
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 5000);
-        }
-
-        function checkForUpdates() {
-            // Update durumu kontrol edilir (buraya backend kontrolü eklenebilir)
-            const updateStatus = document.getElementById("update-status");
-            updateStatus.textContent = "No updates available";
-        }
-
-        // Butona tıklanma olayını dinleyin ve Python scriptini başlatın
-        document.getElementById('start-overlay').addEventListener('click', () => {
-            window.api.startPythonOverlay().then(() => {
-                console.log('Python script successfully executed.');
-            }).catch((err) => {
-                console.error('Failed to execute Python script:', err);
-            });
-        });
-    </script>
+    <script src="JS/backend.js"></script>
 </body>
 </html>
