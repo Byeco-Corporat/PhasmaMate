@@ -18,16 +18,9 @@ def create_overlay():
     custom_font = font.Font(family='Arial', size=14)
 
     # Akıl sağlığı
-    mental_health_label = tk.Label(overlay, text="Byeco & onayB09", font=custom_font, fg='white', bg=overlay['bg'])
+    mental_health_label = tk.Label(overlay, text="Mental: %100", font=custom_font, fg='white', bg=overlay['bg'])
     mental_health_label.pack(anchor='n', pady=(20, 0))  # Pencerenin üst kısmında yerleştirir
 
-    # Lanetli Eşya 
-    # cursed_items_label = tk.Label(overlay, text="Cursed Items: Unknown", font=custom_font, fg='white', bg=overlay['bg'])
-    # cursed_items_label.pack(anchor='n', pady=(10, 0))  # İkinci metni ekler
-
-    # Hayalet tahmin
-    # cursed_items_label = tk.Label(overlay, text="Cursed Items: Unknown", font=custom_font, fg='white', bg=overlay['bg'])
-    # cursed_items_label.pack(anchor='n', pady=(10, 0))  # İkinci metni ekler
 
     # Pencereyi göster
     overlay.mainloop()

@@ -3,17 +3,20 @@ const path = require('path');
 const { spawn } = require('child_process');
 
 let mainWindow;
+let ghostWindow;
+let pythonProcess;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 900,
     height: 600,
     frame: false,
+    icon: path.join(__dirname, 'Asset/app.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'JS/preload.js'),
       contextIsolation: true,
       nodeIntegration: false,
-      enableRemoteModule: false, // Bu ayarı kaldırdım, contextIsolation kullanıyoruz
+      enableRemoteModule: false,
     }
   });
 
@@ -21,13 +24,39 @@ function createWindow() {
   Menu.setApplicationMenu(null);
 
   mainWindow.on('closed', () => {
+    if (ghostWindow) {
+      ghostWindow.close();
+    }
+    if (pythonProcess) {
+      pythonProcess.kill();
+    }
     mainWindow = null;
   });
 
-  mainWindow.maximize();
+  mainWindow.setFullScreen(false);
+  mainWindow.resizable = false;
 }
 
-// Electron uygulamasını başlat
+function createGhostWindow() {
+  ghostWindow = new BrowserWindow({
+    width: 400,
+    height: 300,
+    frame: false,
+      alwaysOnTop: true,  // Varsayılan olarak sabitlenmemiş
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      enableRemoteModule: false,
+    }
+  });
+
+  ghostWindow.loadFile('ghostinfo.html');
+
+  ghostWindow.on('closed', () => {
+    ghostWindow = null;
+  });
+}
+
 app.whenReady().then(createWindow);
 
 app.on('window-all-closed', () => {
@@ -45,7 +74,7 @@ app.on('activate', () => {
 // IPC iletişimini dinleyin ve Python scriptini başlatın
 ipcMain.handle('start-python-overlay', () => {
   return new Promise((resolve, reject) => {
-    const pythonProcess = spawn('python', [path.join(__dirname, 'Python/info.py')]);
+    pythonProcess = spawn('python', [path.join(__dirname, 'Python/mental.py')]);
 
     pythonProcess.stdout.on('data', (data) => {
       console.log(`Python stdout: ${data}`);
@@ -65,4 +94,15 @@ ipcMain.handle('start-python-overlay', () => {
       reject(err);
     });
   });
+});
+
+// IPC iletişimini dinleyin ve ghostWindow penceresini açın
+ipcMain.handle('open-ghost-window', () => {
+  if (!ghostWindow) {
+    createGhostWindow();
+  }
+});
+
+ipcMain.handle('start-update', () => {
+  // Burada güncelleme işlemini başlatacak olan mantığı ekleyin
 });

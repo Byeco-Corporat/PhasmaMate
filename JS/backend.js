@@ -2,6 +2,16 @@ window.onload = function() {
     showToast();
 };
 
+const toggleSwitch = document.getElementById('overlay-toggle2');
+            
+toggleSwitch.addEventListener('change', () => {
+    if (toggleSwitch.checked) {
+        window.electronAPI.openGhostWindow();
+    }
+});
+
+
+
 function showToast() {
     const toast = document.getElementById("toast");
     toast.className = "show";
