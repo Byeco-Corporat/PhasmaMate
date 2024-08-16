@@ -35,5 +35,6 @@ function maximizeWindow() {
 }
 
 function closeWindow() {
-    console.log('Close button clicked');
+    window.close();
 }
+

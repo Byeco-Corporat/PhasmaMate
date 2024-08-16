@@ -8,26 +8,32 @@
 </head>
 <body>
     <div id="navbar">
-        <span id="navbar-title">PhasmaMate</span>
+        <div id="navbar-title">PhasmaMate</div>
         <div id="navbar-buttons">
-            <button class="navbar-button" onclick="minimizeWindow()">_</button>
-            <button class="navbar-button" onclick="maximizeWindow()">Maximize</button>
-            <button class="navbar-button" onclick="closeWindow()">X</button>
+            <button class="navbar-button" onclick="minimizeWindow()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16" viewBox="0 0 24 24"><path d="M0 20h24v2H0z"/></svg>
+            </button>
+            <button class="navbar-button" onclick="maximizeWindow()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16" viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/></svg>
+            </button>
+            <button class="navbar-button" onclick="closeWindow()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="white" width="16" height="16" viewBox="0 0 24 24"><path d="M18.3 5.71L12 12.01l-6.3-6.3L4.29 7.41l6.3 6.3-6.3 6.29 1.41 1.42 6.3-6.29 6.29 6.29 1.41-1.42-6.29-6.29 6.29-6.3z"/></svg>
+            </button>
         </div>
     </div>
-
+    
     <div class="main-content">
         <div id="intro-card">
             <div id="intro-section">
                 <h2>Welcome PhasmaMate</h2>
             </div>
         </div>
-
+    
         <div class="plugins">
             <div class="card">
-                <div class="card-title">Overlay Kontrol</div>
+                <div class="card-title">Akıl Sağlığı</div>
                 <div class="card-content">
-                    <span>Aç/Kapat</span>
+                    <p class="card-description">Akıl sağlığınıza arabadan bakmak yerine sağ üstten bakabilmenizi sağlar.</p>
                     <label class="toggle-switch">
                         <input type="checkbox" id="overlay-toggle1">
                         <span class="slider"></span>
@@ -35,9 +41,9 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-title">Overlay Kontrol</div>
+                <div class="card-title">Sesli Uyarılar</div>
                 <div class="card-content">
-                    <span>Aç/Kapat</span>
+                    <p class="card-description">Oyun sırasında sesli uyarıların etkinleştirilmesini veya devre dışı bırakılmasını sağlar.</p>
                     <label class="toggle-switch">
                         <input type="checkbox" id="overlay-toggle2">
                         <span class="slider"></span>
@@ -45,21 +51,22 @@
                 </div>
             </div>
             <div class="card">
-                <div class="card-title">Overlay Kontrol</div>
+                <div class="card-title">Gece Modu</div>
                 <div class="card-content">
-                    <span>Aç/Kapat</span>
+                    <p class="card-description">Uygulamanın görünümünü koyu moda geçirir, gözlerinizi yormadan kullanmanızı sağlar.</p>
                     <label class="toggle-switch">
                         <input type="checkbox" id="overlay-toggle3">
                         <span class="slider"></span>
                     </label>
                 </div>
             </div>
+            
         </div>
     </div>
 
     <div id="toast">
         <img src="Asset/check.png" alt="Icon" class="toast-icon">
-        <span class="toast-text">PhasmaMate successfully opened!</span>
+        <span class="toast-text">PhasmaMate başarılı şekilde açıldı.</span>
     </div>
     
 
