@@ -4,10 +4,29 @@ app = Flask(__name__)
 
 def determine_ghost(evidences):
     ghost_list = {
-        "Spirit": ["EMF Level 5", "Ghost Writing", "Spirit Box"],
-        "The Twins": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
-        "Phantom": ["Fingerprints", "Ghost Orb", "Ghost Writing"],
-        "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+"Spirit": ["EMF Level 5", "Ghost Writing", "Spirit Box"],
+    "Wraith": ["EMF Level 5", "Dots projector", "Spirit Box"],
+        "Phantom": ["Fingerprints", "Dots projector", "Spirit Box"],
+            "Poltergeist": ["Ghost writing", "Ultraviolet", "Spirit Box"],
+                "Banshee": ["Dots projector", "Ultraviolet", "Ghost orb"],
+                    "Jinn": ["EMF Level 5", "Ultraviolet", "Freezing temperatures"],
+                       "Mare": ["Ghost orb", "Ghost writing", "Spirit box"],
+                          "Revenant": ["Ghost writing", "Ghost orb", "Freezing temperatures"],
+                             "Shade": ["EMF Level 5", "Ghost writing", "Freezing temperatures"],
+                                "Demon": ["Ultraviolet", "Ghost writing", "Freezing temperatures"],
+                                   "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                      "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                         "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                            "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                               "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                                  "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                                     "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                                        "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                                           "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                                              "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+                                                                 "Banshee": ["EMF Level 5", "Freezing Temperatures", "Spirit Box"],
+
+
         # Diğer hayaletler buraya eklenebilir
     }
 
