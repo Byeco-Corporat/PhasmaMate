@@ -40,7 +40,7 @@ function createWindow() {
 function createGhostWindow() {
   ghostWindow = new BrowserWindow({
     width: 400,
-    height: 300,
+    height: 700,
     frame: false,
       alwaysOnTop: true,  // Varsayılan olarak sabitlenmemiş
     webPreferences: {
@@ -102,7 +102,27 @@ ipcMain.handle('open-ghost-window', () => {
     createGhostWindow();
   }
 });
-
+// Güncelleme işlemlerini başlatan IPC işleyicisi
 ipcMain.handle('start-update', () => {
-  // Burada güncelleme işlemini başlatacak olan mantığı ekleyin
+  return new Promise((resolve, reject) => {
+    pythonProcess = spawn('python', [path.join(__dirname, 'Python/update_check.py')]);
+
+    pythonProcess.stdout.on('data', (data) => {
+      console.log(`Python stdout: ${data}`);
+    });
+
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`Python stderr: ${data}`);
+    });
+
+    pythonProcess.on('close', (code) => {
+      console.log(`Python script exited with code ${code}`);
+      resolve(code);
+    });
+
+    pythonProcess.on('error', (err) => {
+      console.error(`Error: ${err}`);
+      reject(err);
+    });
+  });
 });

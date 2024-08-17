@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ghost Helper</title>
     <link rel="stylesheet" type="text/css" href="Css/style.css">
+    <link rel="stylesheet" type="text/css" href="Css/ghost-info.css">
 </head>
 <body>
     <div id="navbar">
@@ -24,6 +25,45 @@
         </div>
     </div>
     
+    <div id="ghost-type">
+        <h2>Ghost: <span id="ghost-result"></span></h2>
+    </div>
+
+    <div id="questions-container">
+        <div class="question-column">
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="q1" name="evidence" value="EMF Level 5" onchange="updateGhostType()">
+                <label for="q1">EMF Level 5</label>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="q2" name="evidence" value="Fingerprints" onchange="updateGhostType()">
+                <label for="q2">Fingerprints</label>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="q3" name="evidence" value="Ghost Writing" onchange="updateGhostType()">
+                <label for="q3">Ghost Writing</label>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="q4" name="evidence" value="Freezing Temperatures" onchange="updateGhostType()">
+                <label for="q4">Freezing Temperatures</label>
+            </div>
+        </div>
+
+        <div class="question-column">
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="q5" name="evidence" value="Ghost Orb" onchange="updateGhostType()">
+                <label for="q5">Ghost Orb</label>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="q6" name="evidence" value="Spirit Box" onchange="updateGhostType()">
+                <label for="q6">Spirit Box</label>
+            </div>
+            <div class="checkbox-wrapper">
+                <input type="checkbox" id="q7" name="evidence" value="D.O.T.S Projector" onchange="updateGhostType()">
+                <label for="q7">D.O.T.S Projector</label>
+            </div>
+        </div>
+    </div>
    
 
     <div id="toast">
@@ -31,7 +71,7 @@
         <span class="toast-text">PhasmaMate başarılı şekilde açıldı.</span>
     </div>
     
-
+    <script src="JS/ghostinfo.js"></script>
     <script src="JS/backend.js"></script>
 </body>
 </html>
