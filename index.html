@@ -10,12 +10,16 @@
     <div id="navbar">
         <div id="navbar-title">PhasmaMate</div>
         <div id="navbar-buttons">
-            <button class="navbar-update-button" id="updateButton" onclick="update()">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#000000"><path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z"/></svg>
-                &nbsp; Update
+            <button class="navbar-update-button" id="updateButton" onclick="checkForUpdate()">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#000000">
+                    <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z"/>
+                </svg>
+                &nbsp; <span id="updateStatus">Güncelle</span>
             </button>
             
-            <button class="navbar-button" onclick="minimizeWindow()">
+            <script src="JS/update.js"></script>
+            
+            <button  class="navbar-button" onclick="minimizeWindow()">
                 <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#FFFFFF"><path d="M200-440v-80h560v80H200Z"/></svg>
             </button>
             <button class="navbar-button" onclick="closeWindow()">

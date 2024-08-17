@@ -1,41 +1,82 @@
+from flask import Flask, jsonify, request
 import requests
-import zipfile
-import io
 import os
+import zipfile
 
-# Güncelleme kontrolü için URL
-UPDATE_URL = "https://api.github.com/repos/byeco/PhasmaMate/releases/latest"
-DOWNLOAD_URL_KEY = "browser_download_url"  # GitHub için doğru anahtar
+app = Flask(__name__)
 
-DOWNLOAD_DIR = "updates"
+REPO_OWNER = "byeco"
+REPO_NAME = "PhasmaMate"
+RELEASES_URL = f"https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/releases"
+LOCAL_VERSION_FILE = "current_version.txt"
+LOCAL_DOWNLOADS_DIR = "downloads"
 
+def read_current_version():
+    if os.path.exists(LOCAL_VERSION_FILE):
+        with open(LOCAL_VERSION_FILE, 'r') as file:
+            return file.read().strip()
+    return None
+
+def write_current_version(version):
+    with open(LOCAL_VERSION_FILE, 'w') as file:
+        file.write(version)
+
+def get_latest_release():
+    response = requests.get(RELEASES_URL)
+    response.raise_for_status()
+    releases = response.json()
+    
+    if releases:
+        latest_release = releases[0]
+        return latest_release
+    return None
+
+@app.route('/check-for-update', methods=['GET'])
 def check_for_update():
-    response = requests.get(UPDATE_URL)
+    latest_release = get_latest_release()
+    
+    if latest_release:
+        latest_version = latest_release['name']
+        current_version = read_current_version()
+
+        if current_version != latest_version:
+            return jsonify({
+                'updateAvailable': True,
+                'latestVersion': latest_version,
+                'assets': [{'name': asset['name'], 'downloadUrl': asset['browser_download_url']} for asset in latest_release['assets']]
+            })
+        else:
+            return jsonify({'updateAvailable': False})
+    else:
+        return jsonify({'updateAvailable': False}), 404
+
+@app.route('/download', methods=['GET'])
+def download_file():
+    download_url = request.args.get('url')
+    file_name = download_url.split('/')[-1]
+    file_path = os.path.join(LOCAL_DOWNLOADS_DIR, file_name)
+
+    response = requests.get(download_url)
     response.raise_for_status()
-    latest_release = response.json()
-    download_url = latest_release['assets'][0][DOWNLOAD_URL_KEY]
 
-    return download_url
+    with open(file_path, 'wb') as file:
+        file.write(response.content)
+    
+    return jsonify({'success': True, 'fileName': file_name})
 
-def download_and_extract(update_url):
-    response = requests.get(update_url)
-    response.raise_for_status()
+@app.route('/extract', methods=['GET'])
+def extract_zip():
+    file_name = request.args.get('file')
+    file_path = os.path.join(LOCAL_DOWNLOADS_DIR, file_name)
 
-    with zipfile.ZipFile(io.BytesIO(response.content)) as zip_ref:
-        if not os.path.exists(DOWNLOAD_DIR):
-            os.makedirs(DOWNLOAD_DIR)
-        zip_ref.extractall(DOWNLOAD_DIR)
-
-def main():
-    try:
-        print("Checking for updates...")
-        update_url = check_for_update()
-        print(f"Update available: {update_url}")
-        print("Downloading and extracting update...")
-        download_and_extract(update_url)
-        print("Update downloaded and extracted.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    if file_name.endswith('.zip'):
+        with zipfile.ZipFile(file_path, 'r') as zip_ref:
+            zip_ref.extractall(LOCAL_DOWNLOADS_DIR)
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False, 'error': 'Not a zip file'}), 400
 
 if __name__ == "__main__":
-    main()
+    if not os.path.exists(LOCAL_DOWNLOADS_DIR):
+        os.makedirs(LOCAL_DOWNLOADS_DIR)
+    app.run(debug=True)

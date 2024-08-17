@@ -18,7 +18,7 @@ def create_overlay():
     custom_font = font.Font(family='Arial', size=14)
 
     # Akıl sağlığı
-    mental_health_label = tk.Label(overlay, text="Mental: %100", font=custom_font, fg='white', bg=overlay['bg'])
+    mental_health_label = tk.Label(overlay, text="Mental: %0", font=custom_font, fg='white', bg=overlay['bg'])
     mental_health_label.pack(anchor='n', pady=(20, 0))  # Pencerenin üst kısmında yerleştirir
 
 

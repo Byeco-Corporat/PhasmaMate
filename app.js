@@ -52,6 +52,10 @@ function createGhostWindow() {
 
   ghostWindow.loadFile('ghostinfo.html');
 
+  ipcMain.on('minimize-window', () => {
+    mainWindow.minimize();
+});
+
   ghostWindow.on('closed', () => {
     ghostWindow = null;
   });
