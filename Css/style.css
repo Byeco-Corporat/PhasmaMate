@@ -241,6 +241,11 @@ input:checked + .slider:before {
 }
 
 
+
+
+
+
+
 /*Settings Bölümü*/
 
 /* Ana Kart Stili */
@@ -375,4 +380,6 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(30px); /* İç dairenin hareketi */
 }
+
+
 

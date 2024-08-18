@@ -1,7 +1,7 @@
 const { ipcRenderer } = require('electron');
 
 function togglePin() {
-    ipcRenderer.send('toggle-always-on-top');
+    ipcRenderer.send('pin-button');
     
     // SVG ikonunu değiştirme
     const pinIcon = document.getElementById('pin-icon');

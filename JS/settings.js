@@ -1,39 +1,72 @@
-// renderer.js
-document.addEventListener("DOMContentLoaded", () => {
-    const themeSelect = document.getElementById('them-select');
-    const languageSelect = document.getElementById('language-select');
-    const notificationsToggle = document.getElementById('notifications-toggle');
-    const autoUpdateToggle = document.getElementById('auto-update-toggle');
+// Modal açma/kapatma işlemleri
+document.getElementById('settings-button').addEventListener('click', function() {
+    document.getElementById('panel').classList.remove('hidden');
+});
 
-    // Tema değişimi
-    themeSelect.addEventListener('change', () => {
-        ipcRenderer.send('settings-update', {
-            key: 'theme',
-            value: themeSelect.value
-        });
-    });
+document.querySelector('.close-button').addEventListener('click', function() {
+    document.getElementById('panel').classList.add('hidden');
+});
 
-    // Dil değişimi
-    languageSelect.addEventListener('change', () => {
-        ipcRenderer.send('settings-update', {
-            key: 'language',
-            value: languageSelect.value
-        });
-    });
+window.addEventListener('click', function(event) {
+    if (event.target === document.getElementById('panel')) {
+        document.getElementById('panel').classList.add('hidden');
+    }
+});
 
-    // Bildirimler
-    notificationsToggle.addEventListener('change', () => {
-        ipcRenderer.send('settings-update', {
-            key: 'notifications',
-            value: notificationsToggle.checked
-        });
-    });
+// Ayarları kaydetme ve geri yükleme fonksiyonları
+function saveLanguageSetting(language) {
+    localStorage.setItem('language', language);
+}
 
-    // Otomatik güncellemeler
-    autoUpdateToggle.addEventListener('change', () => {
-        ipcRenderer.send('settings-update', {
-            key: 'autoUpdate',
-            value: autoUpdateToggle.checked
-        });
-    });
+function loadLanguageSetting() {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+        document.getElementById('language-select').value = savedLanguage;
+    }
+}
+
+function saveThemeSetting(isDarkMode) {
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+}
+
+function loadThemeSetting() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.getElementById('theme-toggle').checked = true;
+        document.body.classList.add('dark-mode');
+    } else {
+        document.getElementById('theme-toggle').checked = false;
+        document.body.classList.remove('dark-mode');
+    }
+}
+
+function loadSettings() {
+    loadLanguageSetting();
+    loadThemeSetting();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadSettings();
+});
+
+document.getElementById('language-select').addEventListener('change', function() {
+    saveLanguageSetting(this.value);
+});
+
+document.getElementById('theme-toggle').addEventListener('change', function() {
+    saveThemeSetting(this.checked);
+});
+
+document.getElementById('reset-settings').addEventListener('click', function() {
+    const defaultLanguage = 'tr';
+    const defaultTheme = 'light';
+
+    document.getElementById('language-select').value = defaultLanguage;
+    document.getElementById('theme-toggle').checked = false;
+    document.body.classList.remove('dark-mode');
+
+    saveLanguageSetting(defaultLanguage);
+    saveThemeSetting(false);
+
+    alert('Ayarlar varsayılan değerlere döndürüldü!');
 });
