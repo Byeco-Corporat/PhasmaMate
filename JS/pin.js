@@ -1,9 +1,9 @@
-const { ipcRenderer } = require('electron');
+document.getElementById('pin-icon').addEventListener('click', togglePin);
 
 function togglePin() {
+    const { ipcRenderer } = require('electron');
     ipcRenderer.send('pin-button');
-    
-    // SVG ikonunu değiştirme
+
     const pinIcon = document.getElementById('pin-icon');
     const isPinned = pinIcon.getAttribute('data-pinned') === 'true';
 

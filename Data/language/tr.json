@@ -15,9 +15,14 @@
 
     "SETTİNGS":"BURASIDA BOŞ NE İSTERSEN YAP",
 
-    "S":"",
-    "SS":"",
-    "SSS":"",
+    "SETTİNGS_MESSAGE":"Ayarlar",
+    "THEM_MESSAGE":"Tema",
+    "LİGHT_MESSAGE":"Açık",
+    "DARK_MESSAGE":"Koyu",
+    "LANGUAGE_MESSAGE":"Dil",
+    "SMALL_OPERATIONS_MESSAGE":"Ufak işlemler",
+    "PİNG_MESSAGE":"Bildirimler",
+    "AUTO_UPDATE_MESSAGE":"Otomatik Güncellemeler",
 
     "GHOST_İNFO":"EVET AMK BURAYI BOŞ BIRAKABİLİRSİN EASTER EGG",
    

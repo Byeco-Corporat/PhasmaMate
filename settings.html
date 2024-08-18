@@ -17,7 +17,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#000000">
                     <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z"/>
                 </svg>
-                &nbsp; <span id="updateStatus">Güncelle</span>
+                &nbsp; <span id="updateStatus" data-translate="UPDATE">Güncelle</span>
             </button>
             
             <button class="navbar-button" onclick="minimizeWindow()">
@@ -32,24 +32,24 @@
     <div class="main-content">
         <div id="intro-card">
             <div id="intro-section">
-                <h2>Settings</h2>
+                <h2 data-translate="SETTİNGS_MESSAGE">Ayarlar</h2>
             </div>
         </div>
         <div class="settings-card">
             <div class="settings-content">
                 <div class="settings">
                     <div class="settings-section">
-                        <h3>Tema</h3>
+                        <h3 data-translate="THEM_MESSAGE">Tema</h3>
                         <div class="toggle-container">
                             <select id="them-select" onchange="changethem(this.value)">
-                                <option value="light">Açık</option>
-                                <option value="dark">Koyu</option>
+                                <option value="light"data-translate="LİGHT_MESSAGE">Açık</option>
+                                <option value="dark" data-translate="DARK_MESSAGE">Koyu</option>
                                 <!-- Daha fazla tema ekleyebilirsiniz -->
                             </select>
                         </div>
                     </div>
                     <div class="settings-section">
-                        <h3>Dil</h3>
+                        <h3 data-translate="LANGUAGE_MESSAGE">Dil</h3>
                         <select id="language-select" onchange="changeLanguage(this.value)">
                             <option value="tr">Türkçe</option>
                             <option value="en">İngilizce</option>
@@ -57,16 +57,16 @@
                         </select>
                     </div>
                     <div class="settings-section">
-                        <h3>Diğer İzinler ve Ayarlar</h3>
+                        <h3 data-translate="SMALL_OPERATIONS_MESSAGE">Diğer İzinler ve Ayarlar</h3>
                         <div class="settings-option">
-                            <label for="notifications-toggle">Bildirimler</label>
+                            <label for="notifications-toggle" data-translate="PİNG_MESSAGE">Bildirimler</label>
                             <label class="toggle-switch">
                                 <input type="checkbox" id="notifications-toggle">
                                 <span class="slider"></span>
                             </label>
                         </div>
                         <div class="settings-option">
-                            <label for="auto-update-toggle">Otomatik Güncellemeler</label>
+                            <label for="auto-update-toggle" data-translate="AUTO_UPDATE_MESSAGE">Otomatik Güncellemeler</label>
                             <label class="toggle-switch">
                                 <input type="checkbox" id="auto-update-toggle">
                                 <span class="slider"></span>

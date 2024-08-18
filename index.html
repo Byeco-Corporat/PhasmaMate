@@ -21,7 +21,7 @@
 
             <script src="JS/update.js"></script>
             
-            <button id="settings" class="navbar-button">
+            <button id="settings" class="navbar-button" >
                 <?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
 <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.25C9.92894 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92894 15.75 12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25ZM9.75 12C9.75 10.7574 10.7574 9.75 12 9.75C13.2426 9.75 14.25 10.7574 14.25 12C14.25 13.2426 13.2426 14.25 12 14.25C10.7574 14.25 9.75 13.2426 9.75 12Z" fill="#ffffff"/>
@@ -29,6 +29,18 @@
 </svg>
             </button>
 
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+    // Butonun referansını al
+    const settingsButton = document.getElementById('settings');
+    
+    // Butona tıklama olayını dinle
+    settingsButton.addEventListener('click', function() {
+        // Ayarlar sayfasına yönlendir
+        window.location.href = 'settings.html';
+    });
+});
+            </script>
 
 
             <button class="navbar-button" onclick="closeWindow()">
@@ -51,66 +63,6 @@
             </div>
         </div>
     
-     <!--   <div id="panel" class="modal hidden">
-            <div class="modal-content">
-                <span class="close-button">&times;</span>
-                <h2>Ayarlar</h2>
-        
-                <div class="settings-section">
-                    <label for="language-select">Dil:</label>
-                    <select id="language-select">
-                        <option value="tr">Türkçe</option>
-                        <option value="en">English</option>
-
-                    </select>
-                </div>
-        
-
-                <div class="settings-section">
-                    <label for="theme-toggle">Tema:</label>
-                    <input type="checkbox" id="theme-toggle">
-                    <label for="theme-toggle" id="theme-label">Koyu Mod</label>
-                </div>
-        
-  
-                <div class="settings-section">
-                    <h3>Diğer İşlemler</h3>
-                    <button id="other-action1">İşlem 1</button>
-                    <button id="other-action2">İşlem 2</button>
-                </div>
-        
-            
-                <div class="settings-section">
-                    <button id="reset-settings" class="reset-button">Varsayılan Ayarlara Geri Dön</button>
-                </div>
-            </div>
-        </div>
-
-        <script>
-             // Paneli açıp kapatmak için gerekli kod
-    document.getElementById('settings').addEventListener('click', function() {
-        var panel = document.getElementById('panel');
-        panel.classList.toggle('hidden');
-    });
-
-    // Koyu/Açık mod ayarının değiştirilmesi
-    document.getElementById('theme-toggle').addEventListener('change', function() {
-        if (this.checked) {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-    });
-
-    // Varsayılan ayarlara geri dön butonu için örnek fonksiyon
-    document.getElementById('reset-settings').addEventListener('click', function() {
-        document.getElementById('language-select').value = 'tr';
-        document.getElementById('theme-toggle').checked = false;
-        document.body.classList.remove('dark-mode');
-        alert('Ayarlar varsayılan değerlere döndürüldü!');
-    });
-        </script>
- -->
 
 <h1 data-translate="PLUGİN_MESSAGE">Eklentiler</h1>
 <hr class="divider">

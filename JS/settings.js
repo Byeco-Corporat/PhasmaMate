@@ -70,3 +70,5 @@ document.getElementById('reset-settings').addEventListener('click', function() {
 
     alert('Ayarlar varsayılan değerlere döndürüldü!');
 });
+
+
