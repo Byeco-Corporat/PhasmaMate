@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('path');
 const { spawn } = require('child_process');
+const fs = require('fs'); // fs modülünü dahil ettik
 
 let mainWindow;
 let ghostWindow;
@@ -128,5 +129,43 @@ ipcMain.handle('start-update', () => {
       console.error(`Error: ${err}`);
       reject(err);
     });
+  });
+});
+
+
+ //Settings bölümü
+ app.whenReady().then(() => {
+
+  ipcMain.on('settings-update', (event, data) => {
+      const filePath = path.join(__dirname, 'Data/save.json');
+
+      // Dosya var mı kontrol et
+      if (!fs.existsSync(filePath)) {
+          console.error('Dosya bulunamadı:', filePath);
+          // Dosya oluşturulabilir veya başka bir işlem yapılabilir
+          fs.writeFileSync(filePath, JSON.stringify({}));
+      }
+
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              console.error('Dosya okuma hatası:', err);
+              return; 
+          }
+
+          let settings = {};
+          try {
+              settings = JSON.parse(fileData);
+          } catch (parseError) {
+              console.error('JSON ayrıştırma hatası:', parseError);
+          }
+
+          settings[data.key] = data.value;
+
+          fs.writeFile(filePath, JSON.stringify(settings, null, 2), (err) => {
+              if (err) {
+                  console.error('Dosya kaydetme hatası:', err);
+              }
+          });
+      });
   });
 });

@@ -21,3 +21,5 @@ ipcRenderer.on('update-available', () => {
     updateButton.style.display = 'block';
   }
 });
+
+contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer);

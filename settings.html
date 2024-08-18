@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhasmaMate</title>
     <link rel="stylesheet" type="text/css" href="Css/style.css">
+    <script src="JS/update.js"></script>
+    <script src="JS/backend.js"></script>
+    <script src="JS/settings.js"></script>
 </head>
 <body>
     <div id="navbar">
@@ -17,9 +20,7 @@
                 &nbsp; <span id="updateStatus">Güncelle</span>
             </button>
             
-            <script src="JS/update.js"></script>
-            
-            <button  class="navbar-button" onclick="minimizeWindow()">
+            <button class="navbar-button" onclick="minimizeWindow()">
                 <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#FFFFFF"><path d="M200-440v-80h560v80H200Z"/></svg>
             </button>
             <button class="navbar-button" onclick="closeWindow()">
@@ -34,50 +35,55 @@
                 <h2>Settings</h2>
             </div>
         </div>
-    
-        <div class="plugins">
-            <div class="card">
-                <div class="card-title">Akıl Sağlığı</div>
-                <div class="card-content">
-                    <p class="card-description">Akıl sağlığınıza arabadan bakmak yerine sağ üstten bakabilmenizi sağlar.</p>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="overlay-toggle1" onclick="toggleFeature('overlay-toggle1', 'Akıl Sağlığı')">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">Hayalet Yardımcısı</div>
-                <div class="card-content">
-                    <p class="card-description">Sorduğu sorulara cevap vererek size hayaleti tahmin edebilir.</p>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="overlay-toggle2" onclick="toggleFeature('overlay-toggle2', 'Hayalet Yardımcısı')">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">Adım Algılayan</div>
-                <div class="card-content">
-                    <p class="card-description">Bu sistem Ai sistemiyle ayarlanıyor hata payı elbet olabilir.</p>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="overlay-toggle3" onclick="toggleFeature('overlay-toggle3', 'Gece Modu')">
-                        <span class="slider"></span>
-                    </label>
+        <div class="settings-card">
+            <div class="settings-content">
+                <div class="settings">
+                    <div class="settings-section">
+                        <h3>Tema</h3>
+                        <div class="toggle-container">
+                            <select id="them-select" onchange="changethem(this.value)">
+                                <option value="light">Açık</option>
+                                <option value="dark">Koyu</option>
+                                <!-- Daha fazla tema ekleyebilirsiniz -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Dil</h3>
+                        <select id="language-select" onchange="changeLanguage(this.value)">
+                            <option value="tr">Türkçe</option>
+                            <option value="en">İngilizce</option>
+                            <!-- Daha fazla dil ekleyebilirsiniz -->
+                        </select>
+                    </div>
+                    <div class="settings-section">
+                        <h3>Diğer İzinler ve Ayarlar</h3>
+                        <div class="settings-option">
+                            <label for="notifications-toggle">Bildirimler</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="notifications-toggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="settings-option">
+                            <label for="auto-update-toggle">Otomatik Güncellemeler</label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="auto-update-toggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
 
+     
         
-        
-
-    <div id="toast">
-        <img src="Asset/check.png" alt="Icon" class="toast-icon">
-        <span class="toast-text">PhasmaMate başarılı şekilde açıldı.</span>
+        <div id="toast">
+            <img src="Asset/check.png" alt="Icon" class="toast-icon">
+            <span class="toast-text">PhasmaMate başarılı şekilde açıldı.</span>
+        </div>
     </div>
-    
-
-    <script src="JS/backend.js"></script>
 </body>
 </html>
