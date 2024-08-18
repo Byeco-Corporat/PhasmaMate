@@ -27,46 +27,172 @@
         </div>
     </div>
     
-    <div id="ghost-type">
-        <h2 data-translate="GHOST_NAME_MESSAGE">Ghost: <span id="ghost-result"></span></h2>
-    </div>
+    
+    <div id="ghosts-container">
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
 
+                <label for="ghost1" data-translate="SPIRIT_MESSAGE">Spirit</label>
+            </div>
+            <div class="ghost-wrapper">
+         
+                <label for="ghost2" data-translate="WRAITH_MESSAGE">Wraith</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost3" data-translate="PHANTOM_MESSAGE">Phantom</label>
+            </div>
+        </div>
+    
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
+
+                <label for="ghost4" data-translate="POLTERGEIST_MESSAGE">Poltergeist</label>
+            </div>
+            <div class="ghost-wrapper">
+               
+                <label for="ghost5" data-translate="BANSHEE_MESSAGE">Banshee</label>
+            </div>
+            <div class="ghost-wrapper">
+               
+                <label for="ghost6" data-translate="JINN_MESSAGE">Jinn</label>
+            </div>
+        </div>
+    
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
+
+                <label for="ghost7" data-translate="MARE_MESSAGE">Mare</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost8" data-translate="REVENANT_MESSAGE">Revenant</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost9" data-translate="SHADE_MESSAGE">Shade</label>
+            </div>
+        </div>
+    
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
+
+                <label for="ghost10" data-translate="DEMON_MESSAGE">Demon</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost11" data-translate="YUREI_MESSAGE">Yurei</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost12" data-translate="ONI_MESSAGE">Oni</label>
+            </div>
+        </div>
+    
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
+
+                <label for="ghost13" data-translate="YOKAI_MESSAGE">Yokai</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost14" data-translate="HANTU_MESSAGE">Hantu</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost15" data-translate="GORYO_MESSAGE">Goryo</label>
+            </div>
+        </div>
+    
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
+
+                <label for="ghost16" data-translate="MYLING_MESSAGE">Myling</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost17" data-translate="ONRYO_MESSAGE">Onryo</label>
+            </div>
+            <div class="ghost-wrapper">
+
+                <label for="ghost18" data-translate="THE_TWINS_MESSAGE">The Twins</label>
+            </div>
+        </div>
+    
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
+  
+                <label for="ghost19" data-translate="RAIJU_MESSAGE">Raiju</label>
+            </div>
+            <div class="ghost-wrapper">
+    
+                <label for="ghost20" data-translate="OBAKE_MESSAGE">Obake</label>
+            </div>
+            <div class="ghost-wrapper">
+        
+                <label for="ghost21" data-translate="THE_MIMIC_MESSAGE">The Mimic</label>
+            </div>
+        </div>
+    
+        <div class="ghost-row">
+            <div class="ghost-wrapper">
+                
+                <label for="ghost22" data-translate="MOROI_MESSAGE">Moroi</label>
+            </div>
+            <div class="ghost-wrapper">
+               
+                <label for="ghost23" data-translate="DEOGEN_MESSAGE">Deogen</label>
+            </div>
+            <div class="ghost-wrapper">
+              
+                <label for="ghost24" data-translate="THAYE_MESSAGE">Thaye</label>
+            </div>
+        </div>
+    </div>
+    
     <div id="questions-container">
-        <div class="question-column">
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="q1" name="evidence" value="“airball”" onchange="updateGhostType()">
-                <label for="q1" data-translate="AİRBALL_MESSAGE">Can do “airball” ghost event</label>
-            </div>
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="q2" name="evidence" value="favourite-room" onchange="updateGhostType()">
-                <label for="q2" data-translate="FAVOURİTE_ROOM_MESSAGE">Can change favourite room</label>
-            </div>
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="q3" name="evidence" value="Ghost Writing" onchange="updateGhostType()">
-                <label for="q3" data-translate="CHECK_MESSAGE">Ghost Writing</label>
-            </div>
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="q4" name="evidence" value="Freezing Temperatures" onchange="updateGhostType()">
-                <label for="q4" data-translate="CHECK_MESSAGE">Freezing Temperatures</label>
-            </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
         </div>
-
-        <div class="question-column">
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="q5" name="evidence" value="Ghost Orb" onchange="updateGhostType()">
-                <label for="q5" data-translate="CHECK_MESSAGE">Ghost Orb</label>
-            </div>
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="q6" name="evidence" value="Spirit Box" onchange="updateGhostType()">
-                <label for="q6" data-translate="CHECK_MESSAGE">Spirit Box</label>
-            </div>
-            <div class="checkbox-wrapper">
-                <input type="checkbox" id="q7" name="evidence" value="D.O.T.S Projector" onchange="updateGhostType()">
-                <label for="q7" data-translate="CHECK_MESSAGE">D.O.T.S Projector</label>
-            </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
         </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
+        </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
+        </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
+        </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
+        </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
+        </div>
+        <div class="question">
+            <p id="question-text">Does the ghost perform an airball ghost event?</p>
+            <button onclick="answerQuestion('airball', 'yes')">Yes</button>
+            <button onclick="answerQuestion('airball', 'no')">No</button>
+        </div>
+        <!-- Add more questions similarly -->
     </div>
-   
 
     <div id="toast">
         <img src="Asset/check.png" alt="Icon" class="toast-icon">

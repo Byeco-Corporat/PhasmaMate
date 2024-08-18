@@ -1,66 +1,53 @@
+#ghosts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pencereyi ortalamak için */
+    gap: 10px;
+}
 
+.ghost-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
 
-#ghost-type {
+.ghost-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100px; /* Küçük boyutlar için uygun */
+}
+
+.ghost-wrapper input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.ghost-wrapper label {
+    font-size: 12px; /* Küçük metin boyutu */
+}
+
+.question {
     margin-bottom: 20px;
 }
 
-#questions-container {
+.buttons {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
-
-.question-column {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
     gap: 10px;
-    width: 45%;
 }
 
-.checkbox-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    padding-left: 20px;
-}
-
-
-
-.checkbox-wrapper input[type="checkbox"] {
-    opacity: 0;
-    position: absolute;
-}
-
-.checkbox-wrapper label {
-    font-size: 14px;
+button {
+    padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
-    padding: 5px 10px;
+    border: none;
     border-radius: 5px;
+    color: white;
+    background-color: #007bff;
     transition: background-color 0.3s;
 }
 
-.checkbox-wrapper label:hover {
-    background-color: #333;
+button:hover {
+    background-color: #0056b3;
 }
-
-.checkbox-wrapper input[type="checkbox"]:checked + label {
-    background-color: #2e7d32;
-}
-
-.checkbox-wrapper label::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 15px;
-    height: 15px;
-    border-radius: 3px;
-    background-color: #444;
-    transition: background-color 0.3s;
-}
-
-.checkbox-wrapper input[type="checkbox"]:checked + label::before {
-    background-color: #2e7d32;
-}
-

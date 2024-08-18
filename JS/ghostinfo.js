@@ -1,36 +1,27 @@
-function updateGhostType() {
-    const checkboxes = document.querySelectorAll('input[name="evidence"]:checked');
-    const selectedValues = Array.from(checkboxes).map(cb => cb.value);
+function answerQuestion(questionId, answer) {
+    // Simulate a backend call to fetch ghost info
+    fetch(`/ghost-info.py?question=${questionId}&answer=${answer}`)
+        .then(response => response.json())
+        .then(data => updateGhosts(data))
+        .catch(error => console.error('Error:', error));
+}
 
-    if (selectedValues.length > 4) {
-        alert("Maksimum 4 kanıt seçebilirsiniz.");
-        
-        // Tüm seçili checkboksları kaldır
-        checkboxes.forEach(cb => cb.checked = false);
+function updateGhosts(data) {
+    // Reset all ghosts to inactive
+    const ghosts = document.querySelectorAll('.ghost-wrapper');
+    ghosts.forEach(ghost => ghost.classList.add('inactive'));
 
-        return;
-    }
-
-    fetch('/determine-ghost', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ evidences: selectedValues }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            console.error('Error:', data.error);
-            alert(data.error);
-            
-            // Hata durumunda tüm seçili checkboksları kaldır
-            checkboxes.forEach(cb => cb.checked = false);
-        } else {
-            document.getElementById('ghost-result').innerText = data.ghosts;
+    // Update ghosts based on data
+    for (const [ghostId, isActive] of Object.entries(data)) {
+        const ghostElement = document.getElementById(ghostId);
+        if (ghostElement) {
+            if (isActive) {
+                ghostElement.classList.remove('inactive');
+                ghostElement.classList.add('active');
+            } else {
+                ghostElement.classList.remove('active');
+                ghostElement.classList.add('inactive');
+            }
         }
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+    }
 }
