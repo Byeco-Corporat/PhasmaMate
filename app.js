@@ -76,6 +76,9 @@ app.whenReady().then(() => {
             startTimestamp: new Date(),
             largeImageKey: 'your_image_key',
             largeImageText: 'PhasmaMate App',
+            buttons: [// Bu çalışmıyor amk ya bunu çalıştırmayı denersen muq olur
+                { label: 'PhasmaMate Github', url: 'https://github.com/byeco/PhasmaMate' }
+            ]
         });
     });
 
@@ -89,6 +92,9 @@ app.whenReady().then(() => {
                 startTimestamp: new Date(),
                 largeImageKey: 'your_image_key',
                 largeImageText: 'PhasmaMate App',
+                buttons: [// Bu çalışmıyor amk ya bunu çalıştırmayı denersen muq olur
+                    { label: 'PhasmaMate Github', url: 'https://github.com/byeco/PhasmaMate' }
+                ]
             });
         }
     });
