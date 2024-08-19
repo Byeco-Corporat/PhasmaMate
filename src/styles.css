@@ -416,99 +416,149 @@ input:checked + .slider:before {
     transition: width 0.3s ease-in-out;
 }
 
+/* Error Container */
 #error-container {
-    margin-top: 10px;
-    background-color: #f8d7da;
+    background-color: #f8d7da; /* Light red background */
     border: 1px solid #f5c6cb;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 25px; /* More rounded corners */
     color: #721c24;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the text */
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px; /* Max width for the container */
+    height: 50px; /* Fixed height for a line-like appearance */
+    position: fixed;
+    left: 50%;
+    bottom: 20px; /* 20px from the bottom */
+    transform: translateX(-50%); /* Center horizontally */
+    z-index: 1000;
     opacity: 0;
     animation: fadeIn 0.5s forwards;
+    background-color: #000000; /* Toast background color */
+    color: #40cc77; /* Toast text color */
 }
 
+/* Toast Text */
 #error-message p {
     margin: 0;
+    font-size: 16px;
 }
 
-#error-message button {
-    margin-top: 10px;
-    padding: 5px 10px;
-    background-color: #f5c6cb;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: #721c24;
+/* Update Button Removed */
+/* Removed the button styling as it's no longer needed */
+
+@media (max-width: 768px) {
+    #error-container {
+        width: 90%;
+        max-width: 90%;
+        bottom: 10px;
+    }
 }
 
-#error-message button:hover {
-    background-color: #f1b0b7;
-}
-
-/* Base styles for all notifications */
-.notification {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+/* Toast Notification */
+#toast {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #000000; /* Dark background for the toast */
+    color: #40cc77;
+    text-align: center;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 20px;
+    font-size: 17px;
+    border-radius: 25px; /* More rounded corners for the toast */
     display: flex;
     align-items: center;
     gap: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    opacity: 0;
-    transform: translateX(100%); /* Start off-screen */
+    transform: translateX(-50%);
 }
 
-/* Animation for showing notifications */
-.notification.show {
-    opacity: 1;
-    transform: translateX(0); /* Slide in */
-    animation: slideIn 0.5s ease forwards;
+/* Toast Show */
+#toast.show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 4.5s;
 }
 
-/* Animation for hiding notifications */
-.notification.hide {
-    opacity: 0;
-    transform: translateX(100%); /* Slide out */
-    animation: slideOut 0.5s ease forwards;
-}
 
-/* Notification types */
-.notification.info {
-    background-color: #2196F3; /* Blue */
+/* styles.css */
+
+/* Position the notification messages at the top center */
+#notification-container {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: auto;
+    max-width: 300px;
+    background-color: rgba(0, 0, 0, 0.7); /* Slightly transparent black background */
     color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 12px; /* Smaller font size */
 }
 
+/* Optional: Add some styles for notifications based on their type */
 .notification.success {
-    background-color: #4CAF50; /* Green */
-    color: white;
+    background-color: rgba(0, 128, 0, 0.7); /* Green background for success */
 }
 
 .notification.error {
-    background-color: #F44336; /* Red */
+    background-color: rgba(255, 0, 0, 0.7); /* Red background for error */
+}
+
+.notification.info {
+    background-color: rgba(0, 0, 255, 0.7); /* Blue background for info */
+}
+
+/* Adjust the error message and button */
+#error-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#error-message {
+    background-color: rgba(255, 0, 0, 0.7);
     color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 12px; /* Smaller font size */
 }
 
-.notification.warning {
-    background-color: #FF9800; /* Orange */
+#error-message button {
+    background-color: #ff0000;
     color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-.notification.neutral {
-    background-color: #9E9E9E; /* Grey */
-    color: white;
+#error-message button:hover {
+    background-color: #cc0000;
 }
 
-/* Notification icon styles */
-.notification-icon {
-    width: 24px;
-    height: 24px;
+/* Centered switch container adjustments */
+.centered-switch-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
 }
 
-/* Text styling */
-.notification-text {
-    flex: 1;
+.switch-container {
+    display: flex;
+    align-items: center;
+}
+
+.switch-label {
+    margin-right: 10px;
 }
 
 /* Keyframes for entrance animation */
@@ -630,3 +680,58 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(26px);
 }
+
+.toast-container {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .toast-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .toast-container {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    font-size: 16px;
+  }
+  
+  .toast-icon {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+  }
+  

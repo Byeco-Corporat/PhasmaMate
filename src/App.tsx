@@ -1,6 +1,6 @@
-// src/App.tsx
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './styles.css';
+import Toast from './components/Toast'; // Import the Toast component
 import NotificationContainer, { useNotification } from './components/NotificationContainer';
 
 const App: React.FC = () => {
@@ -11,6 +11,16 @@ const App: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
     const newWindowRef = useRef<Window | null>(null);
+    const [showToast, setShowToast] = useState<boolean>(true); // State for toast visibility
+
+    useEffect(() => {
+        // Automatically hide the toast after 3 seconds
+        const timer = setTimeout(() => {
+            setShowToast(false);
+        }, 3000);
+
+        return () => clearTimeout(timer); // Cleanup timer on component unmount
+    }, []);
 
     const checkForUpdate = async () => {
         setError(null);
@@ -146,6 +156,11 @@ const App: React.FC = () => {
                     </label>
                 </div>
             </div>
+
+            {/* Toast Notification */}
+            {showToast && (
+                <Toast message="PhasmaMate başarılı şekilde açıldı." iconSrc="C:\Users\tardu\Desktop\PhasmaMate\Asset\app.ico" />
+            )}
 
             <NotificationContainer />
         </div>
