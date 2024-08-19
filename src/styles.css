@@ -409,3 +409,84 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(30px); /* İç dairenin hareketi */
 }
+
+/* Progress Bar Styles */
+#progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+    height: 8px;
+    position: relative;
+}
+
+#progress-bar {
+    width: 100%;
+    background-color: #f3f3f3;
+    height: 8px;
+    position: relative;
+}
+
+#progress {
+    height: 100%;
+    background-color: #4caf50;
+    transition: width 0.3s ease-in-out;
+}
+
+/* Error Message Styles */
+#error-container {
+    margin-top: 10px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    border-radius: 5px;
+    color: #721c24;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+#error-message p {
+    margin: 0;
+}
+
+#error-message button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #f5c6cb;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #721c24;
+}
+
+#error-message button:hover {
+    background-color: #f1b0b7;
+}
+
+/* Notification Styles */
+#notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    opacity: 0;
+    animation: fadeInOut 5s forwards;
+    z-index: 1000;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { opacity: 0; }
+}

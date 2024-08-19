@@ -1,10 +1,93 @@
-import React from 'react';
+// src/App.tsx
+import React, { useState } from 'react';
 import './styles.css';
+import NotificationContainer, { useNotification } from './components/NotificationContainer';
 
 const App: React.FC = () => {
-    const checkForUpdate = () => {
-        // Güncellemeleri kontrol etme işlemi
-        console.log('Güncellemeler kontrol ediliyor...');
+    const { showNotification } = useNotification();
+    
+    const [updateStatus, setUpdateStatus] = useState<string>('Güncelle');
+    const [progress, setProgress] = useState<number | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    const checkForUpdate = async () => {
+        setError(null);
+        setUpdateStatus('Güncellemeler kontrol ediliyor...');
+        setProgress(null);
+
+        try {
+            const response = await fetch('https://api.github.com/repos/{owner}/{repo}/releases/latest');
+            if (!response.ok) {
+                throw new Error('GitHub API hatası');
+            }
+
+            const data = await response.json();
+
+            if (!data || !data.assets || data.assets.length === 0) {
+                setUpdateStatus('Güncelleme mevcut değil');
+                showNotification('Güncelleme mevcut değil.');
+                return;
+            }
+
+            const downloadUrl = data.assets[0].browser_download_url;
+
+            // Initiate the download and track progress
+            const downloadResponse = await fetch(downloadUrl);
+            if (!downloadResponse.ok) {
+                throw new Error('İndirme başarısız oldu');
+            }
+
+            const contentLength = downloadResponse.headers.get('Content-Length');
+            if (!contentLength) {
+                throw new Error('İndirme boyutu alınamadı');
+            }
+
+            const total = parseInt(contentLength, 10);
+            let loaded = 0;
+
+            const reader = downloadResponse.body?.getReader();
+            const stream = new ReadableStream({
+                start(controller) {
+                    function push() {
+                        reader?.read().then(({ done, value }) => {
+                            if (done) {
+                                controller.close();
+                                setUpdateStatus('Güncelleme tamamlandı');
+                                setProgress(100);
+                                showNotification('Güncelleme başarıyla tamamlandı!');
+                                return;
+                            }
+                            loaded += value?.length ?? 0;
+                            setProgress(Math.round((loaded / total) * 100));
+                            controller.enqueue(value);
+                            push();
+                        }).catch(error => {
+                            console.error('Hata:', error);
+                            setError('Güncelleme sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+                            setUpdateStatus('Güncelleme başarısız oldu');
+                            showNotification('Güncelleme başarısız oldu.');
+                            controller.error(error);
+                        });
+                    }
+                    push();
+                }
+            });
+
+            new Response(stream).blob().then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'latest-release.zip';
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+
+        } catch (error) {
+            console.error('Güncellemeler kontrol edilemedi:', error);
+            setError('Güncelleme başarısız oldu. Lütfen tekrar deneyin.');
+            setUpdateStatus('Güncelleme başarısız oldu');
+            showNotification('Güncelleme başarısız oldu.');
+        }
     };
 
     return (
@@ -16,17 +99,29 @@ const App: React.FC = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#000000">
                             <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z"/>
                         </svg>
-                        &nbsp; <span id="updateStatus">Güncelle</span>
+                        &nbsp; <span id="updateStatus">{progress !== null ? `İndiriliyor... ${progress}%` : updateStatus}</span>
                     </button>
 
-                    <button id="settings" className="navbar-button">
-                        <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 8.25C9.92894 8.25 8.25 9.92893 8.25 12C8.25 14.0711 9.92894 15.75 12 15.75C14.0711 15.75 15.75 14.0711 15.75 12C15.75 9.92893 14.0711 8.25 12 8.25ZM9.75 12C9.75 10.7574 10.7574 9.75 12 9.75C13.2426 9.75 14.25 10.7574 14.25 12C14.25 13.2426 13.2426 14.25 12 14.25C10.7574 14.25 9.75 13.2426 9.75 12Z" fill="#ffffff"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11.9747 1.25C11.5303 1.24999 11.1592 1.24999 10.8546 1.27077C10.5375 1.29241 10.238 1.33905 9.94761 1.45933C9.27379 1.73844 8.73843 2.27379 8.45932 2.94762C8.31402 3.29842 8.27467 3.66812 8.25964 4.06996C8.24756 4.39299 8.08454 4.66251 7.84395 4.80141C7.60337 4.94031 7.28845 4.94673 7.00266 4.79568C6.64714 4.60777 6.30729 4.45699 5.93083 4.40743C5.20773 4.31223 4.47642 4.50819 3.89779 4.95219C3.64843 5.14353 3.45827 5.3796 3.28099 5.6434C3.11068 5.89681 2.92517 6.21815 2.70294 6.60307L2.67769 6.64681C2.45545 7.03172 2.26993 7.35304 2.13562 7.62723C1.99581 7.91267 1.88644 8.19539 1.84541 8.50701C1.75021 9.23012 1.94617 9.96142 2.39016 10.5401C2.62128 10.8412 2.92173 11.0602 3.26217 11.2741C3.53595 11.4461 3.68788 11.7221 3.68786 12C3.68785 12.2778 3.53592 12.5538 3.26217 12.7258C2.92169 12.9397 2.62121 13.1587 2.39007 13.4599C1.94607 14.0385 1.75012 14.7698 1.84531 15.4929C1.88634 15.8045 1.99571 16.0873 2.13552 16.3727C2.26983 16.6469 2.45535 16.9682 2.67758 17.3531L2.70284 17.3969C2.92507 17.7818 3.11058 18.1031 3.28089 18.3565C3.45817 18.6203 3.64833 18.8564 3.89769 19.0477C4.47632 19.4917 5.20763 19.6877 5.93073 19.5925C6.30717 19.5429 6.647 19.3922 7.0025 19.2043C7.28833 19.0532 7.60329 19.0596 7.8439 19.1986C8.08452 19.3375 8.24756 19.607 8.25964 19.9301C8.27467 20.3319 8.31403 20.7016 8.45932 21.0524C8.73843 21.7262 9.27379 22.2616 9.94761 22.5407C10.238 22.661 10.5375 22.7076 10.8546 22.7292C11.1592 22.75 11.5303 22.75 11.9747 22.75H12.0252C12.4697 22.75 12.8407 22.75 13.1454 22.7292C13.4625 22.7076 13.762 22.661 14.0524 22.5407C14.7262 22.2616 15.2616 21.7262 15.5407 21.0524C15.686 20.7016 15.7253 20.3319 15.7403 19.93C15.7524 19.607 15.9154 19.3375 16.156 19.1985C16.3966 19.0596 16.7116 19.0532 16.9974 19.2042C17.3529 19.3921 17.6927 19.5429 18.0692 19.5924C18.7923 19.6876 19.5236 19.4917 20.1022 19.0477C20.3516 18.8563 20.5417 18.6203 20.719 18.3565C20.8893 18.1031 21.0748 17.7818 21.297 17.3969L21.3223 17.3531C21.5445 16.9682 21.73 16.6469 21.8643 16.3727C22.0041 16.0873 22.1135 15.8045 22.1546 15.4929C22.2497 14.7698 22.0447 14.0385 21.6007 13.4599C21.3695 13.1587 21.0691 12.9397 20.7286 12.7258C20.4548 12.5538 20.3028 12.2778 20.3028 12C20.3028 11.7221 20.4548 11.4461 20.7286 11.2741C21.0691 11.0602 21.3695 10.8412 21.6007 10.5401C22.0447 9.96142 22.2497 9.23012 22.1546 8.50701C22.1135 8.19539 22.0041 7.91267 21.8643 7.62723C21.73 7.35304 21.5445 7.03172 21.3223 6.64681L21.297 6.60307C20.8652 6.21815 20.5359 5.89681 20.3656 5.6434C20.1882 5.3796 19.9981 5.14353 19.7487 4.95219C19.1701 4.50819 18.4388 4.31223 17.7157 4.40743C17.3392 4.45699 16.9994 4.60777 16.643 4.79568C16.3572 4.94673 16.0423 4.94031 15.8017 4.80141C15.5611 4.66251 15.3981 4.39299 15.386 4.06996C15.371 3.66812 15.3317 3.29842 15.1864 2.94762C14.9073 2.27379 14.3719 1.73844 13.6971 1.45933C13.4067 1.33905 13.1072 1.29241 12.7901 1.27077C12.4854 1.24999 12.1144 1.24999 11.6744 1.25H11.9747Z" fill="#ffffff"/>
-                        </svg>
-                    </button>
+                    {progress !== null && (
+                        <div id="progress-bar-container">
+                            <div id="progress-bar">
+                                <div id="progress" style={{ width: `${progress}%` }}></div>
+                            </div>
+                        </div>
+                    )}
+
+                    {error && (
+                        <div id="error-container">
+                            <div id="error-message">
+                                <p>{error}</p>
+                                <button onClick={checkForUpdate}>Tekrar Dene</button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
+
+            <NotificationContainer />
         </div>
     );
 }
