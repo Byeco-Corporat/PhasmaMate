@@ -1,6 +1,7 @@
 {
   "name": "phasmamate",
   "version": "1.0.0",
+  "main": "electron.js",
   "private": true,
   "dependencies": {
     "react": "^18.0.0",
@@ -9,7 +10,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "electron": "concurrently \"npm:start\" \"wait-on http://localhost:3000 && node delay.js && electron .\""
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.8",
@@ -20,8 +21,12 @@
     "@types/react-dom": "^18.3.0",
     "@types/sockjs": "^0.3.36",
     "@types/yargs": "^17.0.33",
+    "concurrently": "^7.6.0",
+    "electron": "^22.0.0",
     "jest": "^27.5.1",
-    "react-scripts": "^5.0.0"
+    "react-scripts": "^5.0.0",
+    "start-server-and-test": "^2.0.5",
+    "wait-on": "^5.3.0"
   },
   "browserslist": {
     "production": [

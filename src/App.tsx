@@ -1,5 +1,5 @@
 // src/App.tsx
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './styles.css';
 import NotificationContainer, { useNotification } from './components/NotificationContainer';
 
@@ -9,6 +9,8 @@ const App: React.FC = () => {
     const [updateStatus, setUpdateStatus] = useState<string>('Güncelle');
     const [progress, setProgress] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
+    const newWindowRef = useRef<Window | null>(null);
 
     const checkForUpdate = async () => {
         setError(null);
@@ -31,7 +33,6 @@ const App: React.FC = () => {
 
             const downloadUrl = data.assets[0].browser_download_url;
 
-            // Initiate the download and track progress
             const downloadResponse = await fetch(downloadUrl);
             if (!downloadResponse.ok) {
                 throw new Error('İndirme başarısız oldu');
@@ -90,6 +91,20 @@ const App: React.FC = () => {
         }
     };
 
+    const toggleWindow = () => {
+        if (isWindowOpen) {
+            newWindowRef.current?.close();
+            setIsWindowOpen(false);
+        } else {
+            newWindowRef.current = window.open(
+                'https://www.example.com',
+                '_blank',
+                'width=600,height=400'
+            );
+            setIsWindowOpen(true);
+        }
+    };
+
     return (
         <div>
             <div id="navbar">
@@ -118,6 +133,17 @@ const App: React.FC = () => {
                             </div>
                         </div>
                     )}
+                </div>
+            </div>
+
+            {/* Centered Switch Container */}
+            <div className="centered-switch-container">
+                <div className="switch-container">
+                    <span className="switch-label">Hayalet İpuçları</span>
+                    <label className="switch">
+                        <input type="checkbox" checked={isWindowOpen} onChange={toggleWindow} />
+                        <span className="slider round"></span>
+                    </label>
                 </div>
             </div>
 
