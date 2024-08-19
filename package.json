@@ -1,5 +1,5 @@
 {
-  "name": "PhasmaMate",
+  "name": "phasmamate",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -12,8 +12,11 @@
     "build": "react-scripts build"
   },
   "devDependencies": {
+    "@types/prettier": "^3.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/sockjs": "^0.3.36",
+    "@types/yargs": "^17.0.33",
     "react-scripts": "^5.0.0"
   },
   "browserslist": {
