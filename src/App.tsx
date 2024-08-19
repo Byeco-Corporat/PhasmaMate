@@ -25,7 +25,7 @@ const App: React.FC = () => {
 
             if (!data || !data.assets || data.assets.length === 0) {
                 setUpdateStatus('Güncelleme mevcut değil');
-                showNotification('Güncelleme mevcut değil.');
+                showNotification('Güncelleme mevcut değil.', 'info');
                 return;
             }
 
@@ -54,7 +54,7 @@ const App: React.FC = () => {
                                 controller.close();
                                 setUpdateStatus('Güncelleme tamamlandı');
                                 setProgress(100);
-                                showNotification('Güncelleme başarıyla tamamlandı!');
+                                showNotification('Güncelleme başarıyla tamamlandı!', 'success');
                                 return;
                             }
                             loaded += value?.length ?? 0;
@@ -65,7 +65,7 @@ const App: React.FC = () => {
                             console.error('Hata:', error);
                             setError('Güncelleme sırasında bir hata oluştu. Lütfen tekrar deneyin.');
                             setUpdateStatus('Güncelleme başarısız oldu');
-                            showNotification('Güncelleme başarısız oldu.');
+                            showNotification('Güncelleme başarısız oldu.', 'error');
                             controller.error(error);
                         });
                     }
@@ -86,7 +86,7 @@ const App: React.FC = () => {
             console.error('Güncellemeler kontrol edilemedi:', error);
             setError('Güncelleme başarısız oldu. Lütfen tekrar deneyin.');
             setUpdateStatus('Güncelleme başarısız oldu');
-            showNotification('Güncelleme başarısız oldu.');
+            showNotification('Güncelleme başarısız oldu.', 'error');
         }
     };
 

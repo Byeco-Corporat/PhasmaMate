@@ -7,15 +7,16 @@ let notificationId = 0;
 interface NotificationData {
     id: number;
     message: string;
+    type: string;
 }
 
 const NotificationContainer: React.FC = () => {
     const [notifications, setNotifications] = useState<NotificationData[]>([]);
 
-    const addNotification = useCallback((message: string) => {
+    const addNotification = useCallback((message: string, type: string) => {
         setNotifications((prev) => [
             ...prev,
-            { id: notificationId++, message },
+            { id: notificationId++, message, type },
         ]);
     }, []);
 
@@ -30,6 +31,7 @@ const NotificationContainer: React.FC = () => {
                     key={notification.id}
                     id={notification.id}
                     message={notification.message}
+                    type={notification.type}
                     onDismiss={removeNotification}
                 />
             ))}
@@ -42,10 +44,10 @@ export default NotificationContainer;
 export const useNotification = () => {
     const [notifications, setNotifications] = useState<NotificationData[]>([]);
 
-    const showNotification = (message: string) => {
+    const showNotification = (message: string, type: string) => {
         setNotifications((prev) => [
             ...prev,
-            { id: notificationId++, message },
+            { id: notificationId++, message, type },
         ]);
     };
 

@@ -4,10 +4,11 @@ import React, { useState, useEffect } from 'react';
 interface NotificationProps {
     id: number;
     message: string;
+    type: string;
     onDismiss: (id: number) => void;
 }
 
-const Notification: React.FC<NotificationProps> = ({ id, message, onDismiss }) => {
+const Notification: React.FC<NotificationProps> = ({ id, message, type, onDismiss }) => {
     const [visible, setVisible] = useState(true);
 
     useEffect(() => {
@@ -20,7 +21,7 @@ const Notification: React.FC<NotificationProps> = ({ id, message, onDismiss }) =
     }, [id, onDismiss]);
 
     return (
-        <div className={`notification ${visible ? 'show' : 'hide'}`} onClick={() => onDismiss(id)}>
+        <div className={`notification ${type} ${visible ? 'show' : 'hide'}`} onClick={() => onDismiss(id)}>
             {message}
         </div>
     );

@@ -24,13 +24,13 @@ body {
 }
 
 #navbar-buttons {
-    -webkit-app-region: no-drag; /* Butonları tıklanabilir yap */
+    -webkit-app-region: no-drag;
     display: flex;
     gap: 10px;
 }
 
 .navbar-button {
-    -webkit-app-region: no-drag; /* Butonları tıklanabilir yap */
+    -webkit-app-region: no-drag;
     background-color: #000000;
     color: white;
     border: 1px solid #2e2e2e;
@@ -50,7 +50,7 @@ body {
 }
 
 .navbar-update-button {
-    -webkit-app-region: no-drag; /* Butonları tıklanabilir yap */
+    -webkit-app-region: no-drag;
     background-color: #ffffff;
     color: rgb(0, 0, 0);
     border: 1px solid #ececec;
@@ -75,18 +75,18 @@ body {
     align-items: center;
     padding: 20px;
     width: 90%;
-    max-width: 800px; /* Daha dar bir genişlik ayarladım */
+    max-width: 800px;
     margin: 0 auto;
     height: auto;
     box-sizing: border-box;
     overflow: hidden;
-    background-color: #121212; /* Arka plan rengini koyulaştırdım */
+    background-color: #121212;
     border-radius: 10px;
 }
 
 #intro-card {
     padding: 30px;
-    background-color: #252525; /* Arka plan rengini hafifçe açtım */
+    background-color: #252525;
     background-image: url("https://cdn.discordapp.com/attachments/1271882983980142763/1274460438498902067/photo-1672798614484-ac25e99aaf00.jpg?ex=66c25546&is=66c103c6&hm=7474833c983f7fbf098db6dde045033f15576f092257cab68d4c872bca1ae801&");
     border-radius: 30px;
     width: 100%;
@@ -97,11 +97,11 @@ body {
 
 #intro-section h2 {
     font-size: 26px;
-    font-weight: 400; /* Yazı kalınlığını artırdım */
+    font-weight: 400;
     letter-spacing: 1.2px;
     margin: 0;
-    color: #ffffff; /* Yazı rengini beyaz yaptım */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Hafif bir gölge ekledim */
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .button {
@@ -119,23 +119,21 @@ body {
     background-color: #155a8a;
 }
 
-/* Kartlar */
 .plugins {
     display: flex;
-    flex-wrap: wrap; /* Kartların taşmasını önlemek için */
+    flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
     padding: 0 20px;
 }
 
 .card {
-    flex: 1 1 190px; /* Kartların en az 250px genişliğinde olmasını sağlar */
-    max-width: 300px; /* Maksimum genişliği 300px olarak belirledik */
+    flex: 1 1 190px;
+    max-width: 300px;
 }
 
-/* Kutu Tasarımı */
 .box {
-    padding: 15px; /* İç boşluğu biraz küçülttük */
+    padding: 15px;
     background-color: #2c2c2c;
     border-radius: 10px;
     text-align: left;
@@ -149,7 +147,7 @@ body {
 }
 
 .box-title {
-    font-size: 16px; /* Başlık yazı boyutunu biraz küçülttük */
+    font-size: 16px;
     margin-bottom: 10px;
     font-weight: 600;
     color: #ffffff;
@@ -159,21 +157,20 @@ body {
 .box-content {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* İçerik öğeleri arasındaki boşluğu biraz azalttık */
+    gap: 8px;
 }
 
 .box-description {
-    font-size: 14px; /* Yazı boyutunu biraz küçülttük */
+    font-size: 14px;
     color: #e0e0e0;
     line-height: 1.6;
 }
 
-/* Toggle Switch Tasarımı */
 .toggle-switch {
     position: relative;
     display: inline-block;
-    width: 40px; /* Genişliği biraz küçülttük */
-    height: 20px; /* Yüksekliği biraz küçülttük */
+    width: 40px;
+    height: 20px;
 }
 
 .toggle-switch input {
@@ -191,17 +188,17 @@ body {
     bottom: 0;
     background-color: #666;
     transition: 0.4s;
-    border-radius: 20px; /* Köşeleri biraz yuvarlattık */
+    border-radius: 20px;
     box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 16px; /* Yüksekliği biraz küçülttük */
-    width: 16px; /* Genişliği biraz küçülttük */
-    left: 2px; /* Sol boşluğu biraz azalttık */
-    bottom: 2px; /* Alt boşluğu biraz azalttık */
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
     background-color: #ffffff;
     transition: 0.4s;
     border-radius: 50%;
@@ -213,10 +210,9 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(20px); /* Kayma mesafesini biraz küçülttük */
+    transform: translateX(20px);
 }
 
-/* Çizgi */
 .divider {
     border: 0;
     height: 1px;
@@ -269,111 +265,98 @@ input:checked + .slider:before {
     to {bottom: 0; opacity: 0;}
 }
 
-
-
-
-
-
-
 /*Settings Bölümü*/
 
-/* Ana Kart Stili */
 .settings-card {
     width: 100%;
-    max-width: 800px; /* Maksimum genişlik */
-    background-color: #000000; /* Kart arka plan rengi */
-    border-radius: 12px; /* Köşeleri yuvarlattım */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); /* Gölge */
+    max-width: 800px;
+    background-color: #000000;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    color: #ffffff; /* Yazı rengi */
-    border: 2px solid #000000; /* Kart etrafında sınır */
-    max-height: 600px; /* Maksimum yükseklik */
+    color: #ffffff;
+    border: 2px solid #000000;
+    max-height: 600px;
     position: relative;
-    overflow: hidden; /* Kartın taşmasını gizle */
+    overflow: hidden;
 }
 
-/* Kaydırılabilir İçerik Stili */
 .settings-content {
-    max-height: 100%; /* Kart yüksekliği kadar */
-    overflow-y: auto; /* Dikey kaydırma çubuğunu etkinleştir */
-    padding-right: 15px; /* Kaydırma çubuğu için boşluk */
+    max-height: 100%;
+    overflow-y: auto;
+    padding-right: 15px;
 }
 
-/* Kaydırma Çubuğu Stili */
 .settings-content::-webkit-scrollbar {
-    width: 12px; /* Kaydırma çubuğu genişliği */
+    width: 12px;
 }
 
 .settings-content::-webkit-scrollbar-track {
-    background: #2c2c2c; /* Kaydırma çubuğu arka plan rengi */
-    border-radius: 8px; /* Köşeleri yuvarladım */
+    background: #2c2c2c;
+    border-radius: 8px;
 }
 
 .settings-content::-webkit-scrollbar-thumb {
-    background: #1e88e5; /* Kaydırma çubuğu parmağı rengi */
-    border-radius: 8px; /* Köşeleri yuvarladım */
-    border: 3px solid #1e1e1e; /* Kaydırma çubuğu çevresi rengi */
+    background: #1e88e5;
+    border-radius: 8px;
+    border: 3px solid #1e1e1e;
 }
 
 .settings-content::-webkit-scrollbar-thumb:hover {
-    background: #1558b1; /* Hover durumunda parmak rengi */
+    background: #1558b1;
 }
 
-/* Bölüm Başlıkları */
 .settings-section {
     margin-bottom: 20px;
 }
 
 .settings-section h3 {
-    font-size: 22px; /* Başlık yazı boyutunu artırdım */
+    font-size: 22px;
     margin-bottom: 12px;
-    color: #ffffff; /* Başlık rengi */
-    font-weight: 600; /* Yazı kalınlığı */
-    border-bottom: 2px solid #444; /* Alt çizgi ekledim */
+    color: #ffffff;
+    font-weight: 600;
+    border-bottom: 2px solid #444;
     padding-bottom: 8px;
 }
 
-/* Seçenekler */
 .settings-option {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
     padding: 12px;
     border-radius: 8px;
-    background-color: #2c2c2c; /* Seçenek arka plan rengi */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Hafif gölge */
+    background-color: #2c2c2c;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .settings-option:hover {
-    background-color: #3c3c3c; /* Hover durumunda arka plan rengi */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5); /* Hover durumunda gölge */
+    background-color: #3c3c3c;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Seçim (Tıklama) Durumu */
 .settings-option:active {
-    background-color: #333333; /* Tıklanmış durumda arka plan rengi */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Tıklanmış durumda hafif gölge */
+    background-color: #333333;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .settings-option label {
     font-size: 16px;
     margin-right: 15px;
-    color: #e0e0e0; /* Etiket rengi */
+    color: #e0e0e0;
 }
 
-/* Toggle Switch */
 .toggle-switch {
     display: inline-flex;
     align-items: center;
     position: relative;
-    width: 60px; /* Anahtar genişliği */
-    height: 30px; /* Anahtar yüksekliği */
-    margin-left: auto; /* Yazının sağında ve kartın en sağında olması için */
+    width: 60px;
+    height: 30px;
+    margin-left: auto;
 }
 
 .toggle-switch input {
-    opacity: 0; /* Gizle */
+    opacity: 0;
     width: 0;
     height: 0;
 }
@@ -385,32 +368,31 @@ input:checked + .slider:before {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #555; /* Kapalı durumda anahtar arka plan rengi */
-    transition: .4s; /* Geçiş efekti */
-    border-radius: 15px; /* Yuvarlak köşeler */
+    background-color: #555;
+    transition: .4s;
+    border-radius: 15px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 24px; /* İç daire yüksekliği */
-    width: 24px; /* İç daire genişliği */
-    border-radius: 50%; /* Yuvarlak iç daire */
-    left: 3px; /* Sol boşluk */
-    bottom: 3px; /* Alt boşluk */
-    background-color: white; /* İç daire rengi */
-    transition: .4s; /* Geçiş efekti */
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
 }
 
 input:checked + .slider {
-    background-color: #4CAF50; /* Açık durumda anahtar arka plan rengi */
+    background-color: #4CAF50;
 }
 
 input:checked + .slider:before {
-    transform: translateX(30px); /* İç dairenin hareketi */
+    transform: translateX(30px);
 }
 
-/* Progress Bar Styles */
 #progress-bar-container {
     width: 100%;
     background-color: #e0e0e0;
@@ -434,7 +416,6 @@ input:checked + .slider:before {
     transition: width 0.3s ease-in-out;
 }
 
-/* Error Message Styles */
 #error-container {
     margin-top: 10px;
     background-color: #f8d7da;
@@ -464,7 +445,6 @@ input:checked + .slider:before {
     background-color: #f1b0b7;
 }
 
-/* Notification Styles */
 #notification {
     position: fixed;
     top: 20px;
@@ -476,6 +456,37 @@ input:checked + .slider:before {
     opacity: 0;
     animation: fadeInOut 5s forwards;
     z-index: 1000;
+}
+
+.notification {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+.notification.hide {
+    opacity: 0;
+}
+
+.notification.info {
+    background-color: blue;
+    color: white;
+}
+
+.notification.success {
+    background-color: #4caf50;
+    color: white;
+}
+
+.notification.error {
+    background-color: #f44336;
+    color: white;
 }
 
 /* Animations */
