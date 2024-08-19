@@ -445,59 +445,111 @@ input:checked + .slider:before {
     background-color: #f1b0b7;
 }
 
-#notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    opacity: 0;
-    animation: fadeInOut 5s forwards;
-    z-index: 1000;
-}
-
+/* Base styles for all notifications */
 .notification {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
     cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateX(100%); /* Start off-screen */
 }
 
+/* Animation for showing notifications */
 .notification.show {
     opacity: 1;
+    transform: translateX(0); /* Slide in */
+    animation: slideIn 0.5s ease forwards;
 }
 
+/* Animation for hiding notifications */
 .notification.hide {
     opacity: 0;
+    transform: translateX(100%); /* Slide out */
+    animation: slideOut 0.5s ease forwards;
 }
 
+/* Notification types */
 .notification.info {
-    background-color: blue;
+    background-color: #2196F3; /* Blue */
     color: white;
 }
 
 .notification.success {
-    background-color: #4caf50;
+    background-color: #4CAF50; /* Green */
     color: white;
 }
 
 .notification.error {
-    background-color: #f44336;
+    background-color: #F44336; /* Red */
     color: white;
 }
 
-/* Animations */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.notification.warning {
+    background-color: #FF9800; /* Orange */
+    color: white;
 }
 
-@keyframes fadeInOut {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { opacity: 0; }
+.notification.neutral {
+    background-color: #9E9E9E; /* Grey */
+    color: white;
+}
+
+/* Notification icon styles */
+.notification-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Text styling */
+.notification-text {
+    flex: 1;
+}
+
+/* Keyframes for entrance animation */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Keyframes for exit animation */
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Additional fade-in and fade-out animations for smoother transitions */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
