@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './styles.css';
+import Tooltip from './components/Tooltip';
 import Toast from './components/Toast';
 import NotificationContainer, { useNotification } from './components/NotificationContainer';
 
@@ -166,20 +167,24 @@ const App: React.FC = () => {
             </div>
 
             <div className="centered-switch-container">
-                <div className="switch-box" title="Click to toggle Hayalet İpuçları">
-                    <span className="switch-label">Hayalet İpuçları</span>
-                    <label className="switch">
-                        <input type="checkbox" checked={isWindowOpen} onChange={toggleWindow} />
-                        <span className="slider round"></span>
-                    </label>
-                </div>
-                <div className="switch-box" title="Click to toggle Adım Algılayıcı">
-                    <span className="switch-label">Adım Algılayıcı</span>
-                    <label className="switch">
-                        <input type="checkbox" checked={isRichPresenceEnabled} onChange={toggleRichPresence} />
-                        <span className="slider round"></span>
-                    </label>
-                </div>
+                <Tooltip message="Click to toggle Hayalet İpuçları">
+                    <div className="switch-box">
+                        <span className="switch-label">Hayalet İpuçları</span>
+                        <label className="switch">
+                            <input type="checkbox" checked={isWindowOpen} onChange={toggleWindow} />
+                            <span className="slider round"></span>
+                        </label>
+                    </div>
+                </Tooltip>
+                <Tooltip message="Click to toggle Adım Algılayıcı">
+                    <div className="switch-box">
+                        <span className="switch-label">Adım Algılayıcı</span>
+                        <label className="switch">
+                            <input type="checkbox" checked={isRichPresenceEnabled} onChange={toggleRichPresence} />
+                            <span className="slider round"></span>
+                        </label>
+                    </div>
+                </Tooltip>
             </div>
 
             {showToast && (
