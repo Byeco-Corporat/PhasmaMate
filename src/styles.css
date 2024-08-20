@@ -529,10 +529,10 @@ input:checked + .slider:before {
 
 .centered-switch-container {
     display: flex;
-    justify-content: center; /* Centers the boxes horizontally */
-    align-items: center; /* Centers the boxes vertically */
-    gap: 20px; /* Adds space between the boxes */
-    height: 100vh; /* Ensures the container takes up the full height of the viewport */
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 100vh;
 }
 
 .switch-box {
@@ -540,18 +540,23 @@ input:checked + .slider:before {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 200px; /* Width of the box */
-    height: 150px; /* Height of the box */
-    border: 2px solid #000000; /* Border around the box */
-    border-radius: 8px; /* Rounded corners */
+    width: 200px;
+    height: 150px;
+    border: 2px solid #000000;
+    border-radius: 8px;
     padding: 10px;
-    background-color: #000000; /* Background color of the box */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #000000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.switch-box:hover {
+    transform: scale(1.05); /* Slightly scales the box on hover */
 }
 
 .switch-label {
-    margin-bottom: 8px; /* Space between the label and switch */
-    font-weight: bold; /* Makes the label text bold */
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
 .switch {
@@ -575,7 +580,7 @@ input:checked + .slider:before {
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    transition: .4s;
+    transition: background-color 0.4s, transform 0.3s ease; /* Smooth color change and scaling */
     border-radius: 34px;
 }
 
@@ -587,7 +592,7 @@ input:checked + .slider:before {
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: .4s;
+    transition: transform 0.4s, background-color 0.3s ease; /* Smooth transition for the slider */
     border-radius: 50%;
 }
 
@@ -597,4 +602,16 @@ input:checked + .slider {
 
 input:checked + .slider:before {
     transform: translateX(26px);
+}
+
+input:checked + .slider:before {
+    background-color: #fff; /* Ensures the color stays white when toggled */
+}
+
+input:checked:hover + .slider {
+    transform: scale(1.1); /* Slightly scale the slider on hover */
+}
+
+input:not(:checked):hover + .slider {
+    transform: scale(1.05); /* Slightly scale the slider when hovered */
 }

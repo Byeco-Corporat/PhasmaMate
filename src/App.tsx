@@ -166,14 +166,14 @@ const App: React.FC = () => {
             </div>
 
             <div className="centered-switch-container">
-                <div className="switch-box">
+                <div className="switch-box" title="Click to toggle Hayalet İpuçları">
                     <span className="switch-label">Hayalet İpuçları</span>
                     <label className="switch">
                         <input type="checkbox" checked={isWindowOpen} onChange={toggleWindow} />
                         <span className="slider round"></span>
                     </label>
                 </div>
-                <div className="switch-box">
+                <div className="switch-box" title="Click to toggle Adım Algılayıcı">
                     <span className="switch-label">Adım Algılayıcı</span>
                     <label className="switch">
                         <input type="checkbox" checked={isRichPresenceEnabled} onChange={toggleRichPresence} />
