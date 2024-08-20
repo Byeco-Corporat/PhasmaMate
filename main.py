@@ -4,7 +4,11 @@ import os
 import time
 import logging
 import configparser
-from PyQt5.QtCore import QUrl
+import smtplib
+import traceback
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from PyQt5.QtCore import QUrl, QTimer, QFileInfo
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtWebEngineWidgets import QWebEngineView
@@ -18,6 +22,13 @@ RETRIES = config.getint('General', 'retries', fallback=3)
 INITIAL_DELAY = config.getint('General', 'initial_delay', fallback=5)
 LOG_LEVEL = config.get('General', 'log_level', fallback='INFO').upper()
 ERROR_PAGE = config.get('General', 'error_page', fallback='Asset/error.html')
+EMAIL_ON_FAILURE = config.get('Notifications', 'email_on_failure', fallback='').strip()
+EMAIL_SERVER = config.get('Notifications', 'email_server', fallback='smtp.gmail.com')
+EMAIL_PORT = config.getint('Notifications', 'email_port', fallback=587)
+
+# Sensitive data from environment variables
+EMAIL_USERNAME = os.environ.get('EMAIL_USERNAME', '')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD', '')
 
 # Set up logging based on configuration
 logging.basicConfig(filename="app.log", level=getattr(logging, LOG_LEVEL),
@@ -32,6 +43,7 @@ class MainWindow(QMainWindow):
         if not os.path.exists(icon_path):
             error_message = f"Icon file not found: {icon_path}"
             logging.error(error_message)
+            notify_failure(error_message)
             QMessageBox.critical(self, "Error", error_message)
             sys.exit(1)
 
@@ -56,28 +68,51 @@ class MainWindow(QMainWindow):
         # Show the window
         self.show()
 
+        # Timer to watch for changes in config.ini
+        self.config_timer = QTimer(self)
+        self.config_timer.timeout.connect(self.check_config_update)
+        self.config_timer.start(5000)  # Check every 5 seconds
+        self.last_modified_time = QFileInfo("config.ini").lastModified()
+
+    def check_config_update(self):
+        try:
+            current_modified_time = QFileInfo("config.ini").lastModified()
+            if current_modified_time > self.last_modified_time:
+                self.last_modified_time = current_modified_time
+                self.reload_configuration()
+        except Exception as e:
+            error_message = f"Failed to check/update configuration: {str(e)}"
+            logging.error(error_message)
+            notify_failure(error_message)
+
+    def reload_configuration(self):
+        try:
+            logging.info("Reloading configuration from config.ini")
+            config.read('config.ini')
+            global RETRIES, INITIAL_DELAY, LOG_LEVEL, ERROR_PAGE, EMAIL_ON_FAILURE
+            RETRIES = config.getint('General', 'retries', fallback=3)
+            INITIAL_DELAY = config.getint('General', 'initial_delay', fallback=5)
+            LOG_LEVEL = config.get('General', 'log_level', fallback='INFO').upper()
+            ERROR_PAGE = config.get('General', 'error_page', fallback='Asset/error.html')
+            EMAIL_ON_FAILURE = config.get('Notifications', 'email_on_failure', fallback='').strip()
+            logging.getLogger().setLevel(getattr(logging, LOG_LEVEL))
+            logging.info("Configuration reloaded successfully.")
+        except Exception as e:
+            error_message = f"Failed to reload configuration: {str(e)}"
+            logging.error(error_message)
+            notify_failure(error_message)
+
     def on_page_load_finished(self, success):
         if success:
             logging.info("Web page loaded successfully.")
         else:
-            logging.error("Failed to load web page. Loading fallback page.")
+            error_message = "Failed to load web page. Loading fallback page."
+            logging.error(error_message)
+            notify_failure(error_message)
             if os.path.exists(ERROR_PAGE):
                 self.browser.setUrl(QUrl.fromLocalFile(os.path.abspath(ERROR_PAGE)))
             else:
                 self.browser.setHtml("<h1>Unable to load the application.</h1><p>Please try again later.</p>")
-
-# Create the QApplication instance and set the taskbar icon before the MainWindow is created
-app = QApplication(sys.argv)
-
-# Check if the icon file exists before setting the taskbar icon
-icon_path = "Asset/app.ico"
-if not os.path.exists(icon_path):
-    error_message = f"Icon file not found: {icon_path}"
-    logging.error(error_message)
-    QMessageBox.critical(None, "Error", error_message)
-    sys.exit(1)
-
-app.setWindowIcon(QIcon(icon_path))  # Set the taskbar icon
 
 # Function to start the npm command with a retry mechanism
 def start_npm_with_retry(retries=RETRIES, initial_delay=INITIAL_DELAY):
@@ -90,6 +125,7 @@ def start_npm_with_retry(retries=RETRIES, initial_delay=INITIAL_DELAY):
         except FileNotFoundError:
             error_message = "npm command not found. Please ensure Node.js is installed and npm is available in the PATH."
             logging.error(error_message)
+            notify_failure(error_message)
             QMessageBox.critical(None, "Error", error_message)
             sys.exit(1)
         except Exception as e:
@@ -103,8 +139,45 @@ def start_npm_with_retry(retries=RETRIES, initial_delay=INITIAL_DELAY):
                 logging.info("Retrying in %d seconds...", delay)
                 time.sleep(delay)
             else:
-                QMessageBox.critical(None, "Error", f"Failed to start npm after {retries} attempts.")
+                error_message = f"Failed to start npm after {retries} attempts."
+                notify_failure(error_message)
+                QMessageBox.critical(None, "Error", error_message)
                 sys.exit(1)
+
+def notify_failure(message):
+    if EMAIL_ON_FAILURE and EMAIL_USERNAME and EMAIL_PASSWORD:
+        try:
+            msg = MIMEMultipart()
+            msg['From'] = EMAIL_USERNAME
+            msg['To'] = EMAIL_ON_FAILURE
+            msg['Subject'] = "Application Failure Notification"
+            body = f"The following error occurred:\n\n{message}\n\nLog:\n{traceback.format_exc()}"
+            msg.attach(MIMEText(body, 'plain'))
+
+            server = smtplib.SMTP(EMAIL_SERVER, EMAIL_PORT)
+            server.starttls()
+            server.login(EMAIL_USERNAME, EMAIL_PASSWORD)
+            text = msg.as_string()
+            server.sendmail(EMAIL_USERNAME, EMAIL_ON_FAILURE, text)
+            server.quit()
+
+            logging.info("Failure notification sent to %s", EMAIL_ON_FAILURE)
+        except Exception as e:
+            logging.error("Failed to send failure notification: %s", str(e))
+
+# Create the QApplication instance and set the taskbar icon before the MainWindow is created
+app = QApplication(sys.argv)
+
+# Check if the icon file exists before setting the taskbar icon
+icon_path = "Asset/app.ico"
+if not os.path.exists(icon_path):
+    error_message = f"Icon file not found: {icon_path}"
+    logging.error(error_message)
+    notify_failure(error_message)
+    QMessageBox.critical(None, "Error", error_message)
+    sys.exit(1)
+
+app.setWindowIcon(QIcon(icon_path))  # Set the taskbar icon
 
 # Start npm with retries
 start_npm_with_retry()
