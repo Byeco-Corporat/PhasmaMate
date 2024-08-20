@@ -96,7 +96,7 @@ const App: React.FC = () => {
         } catch (error) {
             console.error('Güncellemeler kontrol edilemedi:', error);
             setError('Güncelleme başarısız oldu. Lütfen tekrar deneyin.');
-            setUpdateStatus('Güncelleme başarısız oldu');
+            setUpdateStatus('Güncelle');
             showNotification('Güncelleme başarısız oldu.', 'error');
         }
     };
@@ -139,7 +139,6 @@ const App: React.FC = () => {
                         <div id="error-container">
                             <div id="error-message">
                                 <p>{error}</p>
-                                <button onClick={checkForUpdate}>Tekrar Dene</button>
                             </div>
                         </div>
                     )}
@@ -159,9 +158,8 @@ const App: React.FC = () => {
 
             {/* Toast Notification */}
             {showToast && (
-    <Toast message="PhasmaMate başarılı şekilde açıldı." />
-)}
-
+                <Toast message="PhasmaMate başarılı şekilde açıldı." />
+            )}
 
             <NotificationContainer />
         </div>
