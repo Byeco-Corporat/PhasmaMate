@@ -1,7 +1,7 @@
 {
   "name": "phasmamate",
   "version": "1.0.0",
-  "main": "electron.js",
+  "main": "main.js",
   "private": true,
   "dependencies": {
     "react": "^18.0.0",
