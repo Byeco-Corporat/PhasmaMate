@@ -10,7 +10,7 @@ const App: React.FC = () => {
     const [progress, setProgress] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
-    const [isRichPresenceEnabled, setIsRichPresenceEnabled] = useState<boolean>(false); // State for Discord Rich Presence
+    const [isRichPresenceEnabled, setIsRichPresenceEnabled] = useState<boolean>(false); // State for Adım Algılayıcı
     const newWindowRef = useRef<Window | null>(null);
     const [showToast, setShowToast] = useState<boolean>(true); // State for toast visibility
 
@@ -116,27 +116,26 @@ const App: React.FC = () => {
         }
     };
 
-    const toggleRichPresence = () => {
+    const toggleRichPresence = async () => {
         const newRichPresenceState = !isRichPresenceEnabled;
         setIsRichPresenceEnabled(newRichPresenceState);
     
-        if (newRichPresenceState) {
-            // Send a request to the backend to run the Python script
-            fetch('./components/custom-presence.py', { method: 'POST' })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to run Discord Rich Presence script.');
-                    }
-                    showNotification('Discord Rich Presence activated!', 'success');
-                })
-                .catch(error => {
-                    console.error('Error running custom-presence.py:', error);
-                    showNotification('Failed to start Discord Rich Presence.', 'error');
-                });
-        } else {
-            showNotification('Discord Rich Presence deactivated.', 'info');
+        try {
+            if (newRichPresenceState) {
+                const response = await fetch('./components/custom-presence.py', { method: 'POST' });
+                if (!response.ok) {
+                    throw new Error('Failed to run Adım Algılayıcı script.');
+                }
+                showNotification('Adım Algılayıcı activated!', 'success');
+            } else {
+                showNotification('Adım Algılayıcı deactivated.', 'info');
+            }
+        } catch (error) {
+            console.error('Error running custom-presence.py:', error);
+            showNotification('Failed to start Adım Algılayıcı.', 'error');
         }
     };
+    
     
 
     return (
@@ -178,14 +177,13 @@ const App: React.FC = () => {
                         <span className="slider round"></span>
                     </label>
                 </div>
-                <div className="switch-container">
-    <span className="switch-label">Discord Rich Presence</span>
-    <label className="switch">
-        <input type="checkbox" checked={isRichPresenceEnabled} onChange={toggleRichPresence} />
-        <span className="slider round"></span>
-    </label>
-</div>
-
+                <div className="switch-container" style={{ marginTop: '20px' }}>
+                    <span className="switch-label">Adım Algılayıcı</span>
+                    <label className="switch">
+                        <input type="checkbox" checked={isRichPresenceEnabled} onChange={toggleRichPresence} />
+                        <span className="slider round"></span>
+                    </label>
+                </div>
             </div>
 
             {/* Toast Notification */}
@@ -199,4 +197,3 @@ const App: React.FC = () => {
 }
 
 export default App;
-
