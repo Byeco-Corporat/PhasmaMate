@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './styles.css';
-import Toast from './components/Toast'; // Import the Toast component
+import Toast from './components/Toast';
 import NotificationContainer, { useNotification } from './components/NotificationContainer';
 
 const App: React.FC = () => {
@@ -10,17 +10,16 @@ const App: React.FC = () => {
     const [progress, setProgress] = useState<number | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isWindowOpen, setIsWindowOpen] = useState<boolean>(false);
-    const [isRichPresenceEnabled, setIsRichPresenceEnabled] = useState<boolean>(false); // State for Adım Algılayıcı
+    const [isRichPresenceEnabled, setIsRichPresenceEnabled] = useState<boolean>(false);
     const newWindowRef = useRef<Window | null>(null);
-    const [showToast, setShowToast] = useState<boolean>(true); // State for toast visibility
+    const [showToast, setShowToast] = useState<boolean>(true);
 
     useEffect(() => {
-        // Automatically hide the toast after 3 seconds
         const timer = setTimeout(() => {
             setShowToast(false);
         }, 3000);
 
-        return () => clearTimeout(timer); // Cleanup timer on component unmount
+        return () => clearTimeout(timer);
     }, []);
 
     const checkForUpdate = async () => {
@@ -29,7 +28,7 @@ const App: React.FC = () => {
         setProgress(null);
 
         try {
-            const response = await fetch('https://api.github.com/repos/{owner}/{repo}/releases/latest');
+            const response = await fetch('https://api.github.com/repos/byeco/PhasmaMate/releases/latest');
             if (!response.ok) {
                 throw new Error('GitHub API hatası');
             }
@@ -119,7 +118,7 @@ const App: React.FC = () => {
     const toggleRichPresence = async () => {
         const newRichPresenceState = !isRichPresenceEnabled;
         setIsRichPresenceEnabled(newRichPresenceState);
-    
+
         try {
             if (newRichPresenceState) {
                 const response = await fetch('./components/custom-presence.py', { method: 'POST' });
@@ -135,8 +134,6 @@ const App: React.FC = () => {
             showNotification('Failed to start Adım Algılayıcı.', 'error');
         }
     };
-    
-    
 
     return (
         <div>
@@ -168,16 +165,15 @@ const App: React.FC = () => {
                 </div>
             </div>
 
-            {/* Centered Switch Container */}
             <div className="centered-switch-container">
-                <div className="switch-container">
+                <div className="switch-box">
                     <span className="switch-label">Hayalet İpuçları</span>
                     <label className="switch">
                         <input type="checkbox" checked={isWindowOpen} onChange={toggleWindow} />
                         <span className="slider round"></span>
                     </label>
                 </div>
-                <div className="switch-container" style={{ marginTop: '20px' }}>
+                <div className="switch-box">
                     <span className="switch-label">Adım Algılayıcı</span>
                     <label className="switch">
                         <input type="checkbox" checked={isRichPresenceEnabled} onChange={toggleRichPresence} />
@@ -186,7 +182,6 @@ const App: React.FC = () => {
                 </div>
             </div>
 
-            {/* Toast Notification */}
             {showToast && (
                 <Toast message="PhasmaMate başarılı şekilde açıldı." />
             )}

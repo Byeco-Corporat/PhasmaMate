@@ -484,22 +484,6 @@ input:checked + .slider:before {
     background-color: #cc0000;
 }
 
-/* Centered switch container adjustments */
-.centered-switch-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-}
-
-.switch-container {
-    display: flex;
-    align-items: center;
-}
-
-.switch-label {
-    margin-right: 10px;
-}
-
 /* Keyframes for entrance animation */
 @keyframes slideIn {
     from {
@@ -543,38 +527,33 @@ input:checked + .slider:before {
     }
 }
 
-/* src/styles.css */
-
-/* Center the switch container */
 .centered-switch-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh; /* Adjust as needed */
+    justify-content: center; /* Centers the boxes horizontally */
+    align-items: center; /* Centers the boxes vertically */
+    gap: 20px; /* Adds space between the boxes */
+    height: 100vh; /* Ensures the container takes up the full height of the viewport */
 }
 
-/* Create a square with rounded corners */
-.switch-container {
+.switch-box {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 150px; /* Fixed square width */
-    height: 150px; /* Fixed square height */
-    border-radius: 15px; /* Rounded corners */
-    background-color: #000000; /* Background color */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    justify-content: center;
+    width: 200px; /* Width of the box */
+    height: 150px; /* Height of the box */
+    border: 2px solid #000000; /* Border around the box */
+    border-radius: 8px; /* Rounded corners */
     padding: 10px;
+    background-color: #000000; /* Background color of the box */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
-/* Position the label above the switch */
 .switch-label {
-    margin-bottom: 10px; /* Space between label and switch */
-    font-size: 1.2em;
-    text-align: center;
+    margin-bottom: 8px; /* Space between the label and switch */
+    font-weight: bold; /* Makes the label text bold */
 }
 
-/* Style the switch */
 .switch {
     position: relative;
     display: inline-block;
@@ -596,7 +575,7 @@ input:checked + .slider:before {
     right: 0;
     bottom: 0;
     background-color: #ccc;
-    transition: 0.4s;
+    transition: .4s;
     border-radius: 34px;
 }
 
@@ -608,7 +587,7 @@ input:checked + .slider:before {
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: 0.4s;
+    transition: .4s;
     border-radius: 50%;
 }
 
@@ -619,4 +598,3 @@ input:checked + .slider {
 input:checked + .slider:before {
     transform: translateX(26px);
 }
-
