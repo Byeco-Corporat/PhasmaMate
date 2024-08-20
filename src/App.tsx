@@ -159,8 +159,9 @@ const App: React.FC = () => {
 
             {/* Toast Notification */}
             {showToast && (
-                <Toast message="PhasmaMate başarılı şekilde açıldı." iconSrc="C:\Users\tardu\Desktop\PhasmaMate\Asset\app.ico" />
-            )}
+    <Toast message="PhasmaMate başarılı şekilde açıldı." />
+)}
+
 
             <NotificationContainer />
         </div>

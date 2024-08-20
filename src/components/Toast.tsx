@@ -1,31 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Toast.css';
+import checkIcon from '../assets/check.png';
 
-type ToastProps = {
-  message: string;
-  duration?: number;
-  iconSrc: string;
-};
+interface ToastProps {
+    message: string;
+    iconSrc?: string;
+}
 
-const Toast: React.FC<ToastProps> = ({ message, duration = 3000, iconSrc }) => {
-  const [visible, setVisible] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisible(false);
-    }, duration);
-
-    return () => clearTimeout(timer);
-  }, [duration]);
-
-  if (!visible) return null;
-
-  return (
-    <div className="toast-container">
-      <img src={iconSrc} alt="Icon" className="toast-icon" />
-      <span>{message}</span>
-    </div>
-  );
+const Toast: React.FC<ToastProps> = ({ message, iconSrc = checkIcon }) => {
+    return (
+        <div className="toast-container">
+            <img src={iconSrc} alt="Icon" />
+            <span className="toast-message">{message}</span>
+        </div>
+    );
 };
 
 export default Toast;

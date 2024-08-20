@@ -1,22 +1,53 @@
+/* Toast.css */
+
 .toast-container {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #4caf50;
-    color: white;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    font-size: 16px;
+  position: fixed;  /* Fixes the position at the bottom */
+  bottom: 20px;  /* 20px from the bottom */
+  left: 50%;  /* Center it horizontally */
+  transform: translateX(-50%);  /* Centers the toast */
+  z-index: 1000;  /* Ensure it appears above other elements */
+  max-width: 300px;  /* Set a reasonable max-width */
+  background-color: #28a745;  /* Green background color */
+  color: #fff;  /* White text color */
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;  /* Prevent it from blocking interactions behind it */
+  opacity: 0;  /* Initially invisible */
+  animation: fadeIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;  /* Animation sequence */
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);  /* Start slightly below */
   }
-  
-  .toast-icon {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
+  to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);  /* Move into position */
   }
-  
+}
+
+@keyframes fadeOut {
+  from {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);  /* Start at the final position */
+  }
+  to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);  /* Move downwards */
+  }
+}
+
+.toast-container img {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.toast-container .toast-message {
+  font-size: 14px;
+}
