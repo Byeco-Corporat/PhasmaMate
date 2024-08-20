@@ -7,7 +7,8 @@ from pypresence import Presence
 import tkinter as tk
 from tkinter import Label
 from PIL import Image, ImageTk
-
+import custom_presence
+custom_presence.run_presence()
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -29,6 +30,9 @@ class MainWindow(QMainWindow):
         # Start the Electron application after ensuring React server is running
         self.ensure_react_server_running()
         self.start_electron()
+
+        # Start the custom-presence.py script
+        self.start_custom_presence()
 
     def update_discord_presence(self):
         self.rpc.update(
@@ -63,6 +67,13 @@ class MainWindow(QMainWindow):
             subprocess.Popen(['npm', 'run', 'start-electron'])  # Start Electron app
         except Exception as e:
             print(f"Failed to start Electron: {e}")
+
+    def start_custom_presence(self):
+        try:
+            subprocess.Popen([sys.executable, 'custom-presence.py'])
+            print("Started custom-presence.py successfully.")
+        except Exception as e:
+            print(f"Failed to start custom-presence.py: {e}")
 
 def show_toast():
     toast = tk.Tk()
