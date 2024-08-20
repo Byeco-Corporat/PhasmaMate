@@ -167,7 +167,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="centered-switch-container">
-                <Tooltip message="Click to toggle Hayalet İpuçları">
+                <Tooltip message={isWindowOpen ? "Hayalet İpuçları is ON" : "Hayalet İpuçları is OFF"}>
                     <div className="switch-box">
                         <span className="switch-label">Hayalet İpuçları</span>
                         <label className="switch">
@@ -176,7 +176,7 @@ const App: React.FC = () => {
                         </label>
                     </div>
                 </Tooltip>
-                <Tooltip message="Click to toggle Adım Algılayıcı">
+                <Tooltip message={isRichPresenceEnabled ? "Adım Algılayıcı is ON" : "Adım Algılayıcı is OFF"}>
                     <div className="switch-box">
                         <span className="switch-label">Adım Algılayıcı</span>
                         <label className="switch">
