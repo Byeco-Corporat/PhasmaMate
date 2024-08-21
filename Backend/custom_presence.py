@@ -16,8 +16,7 @@ while True:  # infinite loop
         state="Visual Studio Code",
         start=start,
         buttons=[
-            {"label": "The Bora Moment", "url": "http://localhost:3000/"},
-            {"label": "Discord", "url": "https://discord.gg/byeco"}  # Corrected URL
+            {"label": "Github Projects", "url": "https://github.com/byeco/PhasmaMate"},
         ]  # up to 2 buttons
     )
     time.sleep(60)  # can be as low as 15, depends on how often you want to update
