@@ -4,7 +4,6 @@
   "main": "main.py",
   "private": true,
   "dependencies": {
-    "@types/node": "^22.4.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
@@ -20,6 +19,7 @@
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.12",
+    "@types/node": "^22.4.2",
     "@types/prettier": "^3.0.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",

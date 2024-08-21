@@ -4,24 +4,75 @@
     cursor: pointer;
 }
 
-.tooltip-text {
+.tooltip-content {
     visibility: hidden;
-    width: 160px;
+    width: auto;
+    max-width: 300px;
     background-color: #333;
     color: #fff;
-    text-align: center;
+    text-align: left;
     border-radius: 5px;
-    padding: 8px;
+    padding: 10px;
     position: absolute;
     z-index: 1;
-    bottom: 125%; /* Position above the element */
+    bottom: 125%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(10px);
     opacity: 0;
-    transition: opacity 0.3s;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    word-wrap: break-word;
 }
 
-.tooltip-container:hover .tooltip-text {
+.tooltip-container:hover .tooltip-content {
     visibility: visible;
     opacity: 1;
+    transform: translateX(-50%) translateY(-10px); /* Custom upward animation */
+}
+
+.tooltip-icon {
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.tooltip-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.tooltip-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.tooltip-button:hover {
+    background-color: #45a049;
+}
+
+.tooltip-link {
+    color: #1E90FF;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.tooltip-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .tooltip-content {
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(10px);
+        font-size: 14px;
+    }
 }
