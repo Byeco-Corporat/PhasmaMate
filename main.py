@@ -103,16 +103,35 @@ class MainWindow(QMainWindow):
             notify_failure(error_message)
 
     def on_page_load_finished(self, success):
-        if success:
-            logging.info("Web page loaded successfully.")
+     if success:
+        logging.info("Web page loaded successfully.")
+     else:
+        error_message = "Failed to load web page. Loading fallback page."
+        logging.error(error_message)
+        notify_failure(error_message)
+        
+        if os.path.exists(ERROR_PAGE):
+            self.browser.setUrl(QUrl.fromLocalFile(os.path.abspath(ERROR_PAGE)))
         else:
-            error_message = "Failed to load web page. Loading fallback page."
-            logging.error(error_message)
-            notify_failure(error_message)
-            if os.path.exists(ERROR_PAGE):
-                self.browser.setUrl(QUrl.fromLocalFile(os.path.abspath(ERROR_PAGE)))
-            else:
-                self.browser.setHtml("<h1>Unable to load the application.</h1><p>Please try again later.</p>")
+            error_html = """
+            <h1>Unable to load the application.</h1>
+            <p>Please try again later.</p>
+            <p><strong>Possible Reasons:</strong></p>
+            <ul>
+                <li>The React application is not running.</li>
+                <li>Network issues.</li>
+                <li>Port 3000 is not accessible or in use by another process.</li>
+                <li>Check your npm and React configuration.</li>
+            </ul>
+            <p><strong>Steps to Resolve:</strong></p>
+            <ol>
+                <li>Ensure the React application is started with <code>npm start</code>.</li>
+                <li>Check for any error messages in the console or log files.</li>
+                <li>Restart the application.</li>
+            </ol>
+            """
+            self.browser.setHtml(error_html)
+
 
 # Function to start the npm command with a retry mechanism
 def start_npm_with_retry(retries=RETRIES, initial_delay=INITIAL_DELAY):
