@@ -3,6 +3,7 @@ import './styles.css';
 import Tooltip from './components/Tooltip';
 import Toast from './components/Toast';
 import NotificationContainer, { useNotification } from './components/NotificationContainer';
+import CustomTitleBar from './components/CustomTitleBar'; // Import the custom title bar
 
 const App: React.FC = () => {
     const { showNotification } = useNotification();
@@ -122,7 +123,7 @@ const App: React.FC = () => {
 
         try {
             if (newRichPresenceState) {
-                const response = await fetch('./components/custom-presence.py', { method: 'POST' });
+                const response = await fetch('./components/adim.py', { method: 'POST' });
                 if (!response.ok) {
                     throw new Error('Failed to run Adım Algılayıcı script.');
                 }
@@ -131,98 +132,90 @@ const App: React.FC = () => {
                 showNotification('Adım Algılayıcı deactivated.', 'info');
             }
         } catch (error) {
-            console.error('Error running custom-presence.py:', error);
+            console.error('Error running adim.py:', error);
             showNotification('Failed to start Adım Algılayıcı.', 'error');
         }
     };
 
-    const handleToggleWindow = () => {
-        toggleWindow();
-        showNotification(`Hayalet İpuçları ${isWindowOpen ? "disabled" : "enabled"}.`, 'info');
-    };
-
-    const handleToggleRichPresence = () => {
-        toggleRichPresence();
-        showNotification(`Adım Algılayıcı ${isRichPresenceEnabled ? "disabled" : "enabled"}.`, 'info');
-    };
-
     return (
-        <div>
-            <div id="navbar">
-                <div id="navbar-title">PhasmaMate</div>
-                <div id="navbar-buttons">
-                    <button className="navbar-update-button" id="updateButton" onClick={checkForUpdate}>
-                        <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#000000">
-                            <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z"/>
-                        </svg>
-                        &nbsp; <span id="updateStatus">{progress !== null ? `İndiriliyor... ${progress}%` : updateStatus}</span>
-                    </button>
+        <div className="app-container">
+            <CustomTitleBar
+                title="PhasmaMate"
+                onClose={() => window.close()} // Custom close action
+            />
 
-                    {progress !== null && (
-                        <div id="progress-bar-container">
-                            <div id="progress-bar">
-                                <div id="progress" style={{ width: `${progress}%` }}></div>
-                            </div>
-                        </div>
-                    )}
+            <div className="navbar">
+                <button className="navbar-update-button" id="updateButton" onClick={checkForUpdate}>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#000000">
+                        <path d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h200v80H160v480h640v-480H600v-80h200q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-184L280-544l56-56 104 104v-304h80v304l104-104 56 56-200 200Z"/>
+                    </svg>
+                    &nbsp; <span id="updateStatus">{progress !== null ? `İndiriliyor... ${progress}%` : updateStatus}</span>
+                </button>
 
-                    {error && (
-                        <div id="error-container">
-                            <div id="error-message">
-                                <p>{error}</p>
-                            </div>
+                {progress !== null && (
+                    <div id="progress-bar-container">
+                        <div id="progress-bar">
+                            <div id="progress" style={{ width: `${progress}%` }}></div>
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
+
+                {error && (
+                    <div id="error-container">
+                        <div id="error-message">
+                            <p>{error}</p>
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="container">
-      {/* Sol taraftaki Sidenav */}
-      <div className="sidenav-left">
-        <h2 className="header">Menü</h2>
-        <div className="switch-card">
-          <div className="card-header">
-            <span>Hayalet İpuçları</span>
-            <button className="toggle-button" onClick={toggleWindow}>
-              {isWindowOpen ? "Disable" : "Enable"}
-            </button>
-          </div>
-          <div className="card-content">
-            <p>Status: {isWindowOpen ? "ON" : "OFF"}</p>
-            <p>Click to toggle the Hayalet İpuçları window.</p>
-          </div>
-        </div>
+                {/* Sol taraftaki Sidenav */}
+                <div className="sidenav-left">
+                    <h2 className="header">Menü</h2>
+                    <div className="switch-card">
+                        <div className="card-header">
+                            <span>Hayalet İpuçları</span>
+                            <button className="toggle-button" onClick={toggleWindow}>
+                                {isWindowOpen ? "Disable" : "Enable"}
+                            </button>
+                        </div>
+                        <div className="card-content">
+                            <p>Status: {isWindowOpen ? "ON" : "OFF"}</p>
+                            <p>Click to toggle the Hayalet İpuçları window.</p>
+                        </div>
+                    </div>
 
-        <div className="switch-card">
-          <div className="card-header">
-            <span>Adım Algılayıcı</span>
-            <button className="toggle-button" onClick={toggleRichPresence}>
-              {isRichPresenceEnabled ? "Disable" : "Enable"}
-            </button>
-          </div>
-          <div className="card-content">
-            <p>Status: {isRichPresenceEnabled ? "ON" : "OFF"}</p>
-            <p>Click to toggle the Adım Algılayıcı.</p>
-          </div>
-        </div>
-      </div>
+                    <div className="switch-card">
+                        <div className="card-header">
+                            <span>Adım Algılayıcı</span>
+                            <button className="toggle-button" onClick={toggleRichPresence}>
+                                {isRichPresenceEnabled ? "Disable" : "Enable"}
+                            </button>
+                        </div>
+                        <div className="card-content">
+                            <p>Status: {isRichPresenceEnabled ? "ON" : "OFF"}</p>
+                            <p>Click to toggle the Adım Algılayıcı.</p>
+                        </div>
+                    </div>
+                </div>
 
-      {/* Sağ taraftaki Sidenav */}
-      <div className="sidenav-right">
-        <h2 className="header">Güncellemeler</h2>
-        <div className="update-card">
-          <p>Son güncelleme: 21 Ağustos 2024</p>
-          <p>Bu uygulama, en yeni özellikler ve hata düzeltmeleri ile güncellendi.</p>
-        </div>
-        <button className="buttonPrimary">Güncelleme Kontrolü</button>
-      </div>
+                {/* Sağ taraftaki Sidenav */}
+                <div className="sidenav-right">
+                    <h2 className="header">Güncellemeler</h2>
+                    <div className="update-card">
+                        <p>Son güncelleme: 21 Ağustos 2024</p>
+                        <p>Bu uygulama, en yeni özellikler ve hata düzeltmeleri ile güncellendi.</p>
+                    </div>
+                    <button className="buttonPrimary">Güncelleme Kontrolü</button>
+                </div>
 
-      {/* Ana içerik */}
-      <div className="content">
-        <h2 className="header">Ana İçerik</h2>
-        {/* Diğer içerik buraya gelecek */}
-      </div>
-    </div>
+                {/* Ana içerik */}
+                <div className="content">
+                    <h2 className="header">Ana İçerik</h2>
+                    {/* Diğer içerik buraya gelecek */}
+                </div>
+            </div>
 
             {showToast && (
                 <Toast message="PhasmaMate başarılı şekilde açıldı." />

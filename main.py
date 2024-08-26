@@ -8,8 +8,8 @@ import smtplib
 import traceback
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from PyQt5.QtCore import QUrl, QTimer, QFileInfo
-from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QUrl, QTimer, QFileInfo, QPoint, Qt
+from PyQt5.QtGui import QIcon, QMouseEvent
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 
@@ -37,6 +37,13 @@ logging.basicConfig(filename="app.log", level=getattr(logging, LOG_LEVEL),
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        # Variables to handle dragging
+        self._is_dragging = False
+        self._drag_position = QPoint()
+
+        # Frameless window
+        self.setWindowFlags(self.windowFlags() | Qt.FramelessWindowHint)
 
         # Check if the icon file exists
         icon_path = "Asset/app.ico"
@@ -103,37 +110,50 @@ class MainWindow(QMainWindow):
             notify_failure(error_message)
 
     def on_page_load_finished(self, success):
-     if success:
-        logging.info("Web page loaded successfully.")
-     else:
-        error_message = "Failed to load web page. Loading fallback page."
-        logging.error(error_message)
-        notify_failure(error_message)
-        
-        if os.path.exists(ERROR_PAGE):
-            self.browser.setUrl(QUrl.fromLocalFile(os.path.abspath(ERROR_PAGE)))
+        if success:
+            logging.info("Web page loaded successfully.")
         else:
-            error_html = """
-            <h1>Unable to load the application.</h1>
-            <p>Please try again later.</p>
-            <p><strong>Possible Reasons:</strong></p>
-            <ul>
-                <li>The React application is not running.</li>
-                <li>Network issues.</li>
-                <li>Port 3000 is not accessible or in use by another process.</li>
-                <li>Check your npm and React configuration.</li>
-            </ul>
-            <p><strong>Steps to Resolve:</strong></p>
-            <ol>
-                <li>Ensure the React application is started with <code>npm start</code>.</li>
-                <li>Check for any error messages in the console or log files.</li>
-                <li>Restart the application.</li>
-            </ol>
-            """
-            self.browser.setHtml(error_html)
+            error_message = "Failed to load web page. Loading fallback page."
+            logging.error(error_message)
+            notify_failure(error_message)
+            
+            if os.path.exists(ERROR_PAGE):
+                self.browser.setUrl(QUrl.fromLocalFile(os.path.abspath(ERROR_PAGE)))
+            else:
+                error_html = """
+                <h1>Unable to load the application.</h1>
+                <p>Please try again later.</p>
+                <p><strong>Possible Reasons:</strong></p>
+                <ul>
+                    <li>The React application is not running.</li>
+                    <li>Network issues.</li>
+                    <li>Port 3000 is not accessible or in use by another process.</li>
+                    <li>Check your npm and React configuration.</li>
+                </ul>
+                <p><strong>Steps to Resolve:</strong></p>
+                <ol>
+                    <li>Ensure the React application is started with <code>npm start</code>.</li>
+                    <li>Check for any error messages in the console or log files.</li>
+                    <li>Restart the application.</li>
+                </ol>
+                """
+                self.browser.setHtml(error_html)
 
+    def mousePressEvent(self, event: QMouseEvent):
+        if event.button() == Qt.LeftButton:
+            self._is_dragging = True
+            self._drag_position = event.globalPos() - self.frameGeometry().topLeft()
+            event.accept()
 
-# Function to start the npm command with a retry mechanism
+    def mouseMoveEvent(self, event: QMouseEvent):
+        if self._is_dragging:
+            self.move(event.globalPos() - self._drag_position)
+            event.accept()
+
+    def mouseReleaseEvent(self, event: QMouseEvent):
+        if event.button() == Qt.LeftButton:
+            self._is_dragging = False
+
 def start_npm_with_retry(retries=RETRIES, initial_delay=INITIAL_DELAY):
     for attempt in range(retries):
         try:
